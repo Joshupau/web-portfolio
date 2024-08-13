@@ -1,17 +1,19 @@
 import Image from "next/image"
+import BottomToTop from "./animated/bottom-to-top"
 
 
 function Myimage() {
   return (
+    <BottomToTop>
     <div>
         <Image
-        width={600}
-        height={800}
-        src='/portfolio.png'
+        width={4000}
+        height={4000}
+        src='/3portfolio.png'
         alt="Picture of the author"
-        className="brightness-105"
         />
     </div>
+  </BottomToTop>
   )
 }
 
