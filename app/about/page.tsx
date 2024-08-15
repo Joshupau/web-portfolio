@@ -1,5 +1,8 @@
+'use client'
+
 import LeftToRight from "@/components/animated/left-to-right";
 import RightToLeft from "@/components/animated/right-to-left";
+import { BackgroundGradient } from "@/components/ui/background-gradient";
 import { Spotlight } from "@/components/ui/Spotlight";
 import { FaJs, FaReact, FaNode, FaPhp, FaLaravel, FaVuejs, FaGithub, FaGitAlt, FaHtml5, FaCss3Alt } from 'react-icons/fa';
 import { SiTypescript, SiNextdotjs } from 'react-icons/si';
@@ -17,8 +20,10 @@ export default function About() {
                         <li>- Tech Support</li>
                     </ul>
                 </div>
-                <div className="bg-black-200 rounded-md h-40 row-span-2 col-start-1 md:col-start-2 row-start-2 md:row-start-3 hidden md:flex justify-center items-center">
-                    <span className="font-semibold text-2xl">About Me</span>
+                <div className="h-40 row-span-2 col-start-1 md:col-start-2 row-start-2 md:row-start-3 hidden md:flex justify-center items-center">
+                    <BackgroundGradient className="rounded-[22px] p-[60px] bg-black-200">
+                    <span className="font-semibold text-3xl">About Me</span>
+                    </BackgroundGradient>
                 </div>
                 <RightToLeft>
                     <div className="hidden bg-gradient-to-br from-blue-500 via-cyan-500 to-emerald-500 h-full rounded-md col-start-1 row-start-4 md:col-start-1 md:row-start-4 md:flex justify-center items-center">
@@ -38,54 +43,12 @@ export default function About() {
                 <div className="bg-black-200 rounded-md row-span-3 md:row-span-4 col-start-2 md:col-start-3 row-start-5 md:row-start-4 flex flex-col justify-start items-start p-4">
                     <h2 className="font-semibold text-2xl mb-4">Tech Stack</h2>
                     <div className="grid grid-cols-3 gap-4">
-                        <div className="flex flex-col items-center">
-                            <FaHtml5 className="text-white w-7 h-7" />
-                            <span className="text-sm">HTML5</span>
+                        {Stack.map((item) => (
+                        <div key={item.id} className="flex flex-col items-center">
+                            {item.icon}
+                            <span className="text-sm">{item.name}</span>
                         </div>
-                        <div className="flex flex-col items-center">
-                            <FaCss3Alt className="text-white w-7 h-7" />
-                            <span className="text-sm">CSS3</span>
-                        </div>
-                        <div className="flex flex-col items-center">
-                            <FaJs className="text-white w-7 h-7" />
-                            <span className="text-sm">JavaScript</span>
-                        </div>
-                        <div className="flex flex-col items-center">
-                            <SiTypescript className="text-white w-7 h-7" />
-                            <span className="text-sm">TypeScript</span>
-                        </div>
-                        <div className="flex flex-col items-center">
-                            <FaReact className="text-white w-7 h-7" />
-                            <span className="text-sm">React</span>
-                        </div>
-                        <div className="flex flex-col items-center">
-                            <FaNode className="text-white w-7 h-7" />
-                            <span className="text-sm">Node.js</span>
-                        </div>
-                        <div className="flex flex-col items-center">
-                            <SiNextdotjs className="text-white w-7 h-7" />
-                            <span className="text-sm">Next.js</span>
-                        </div>
-                        <div className="flex flex-col items-center">
-                            <FaPhp className="text-white w-7 h-7" />
-                            <span className="text-sm">PHP</span>
-                        </div>
-                        <div className="flex flex-col items-center">
-                            <FaLaravel className="text-white w-7 h-7" />
-                            <span className="text-sm">Laravel</span>
-                        </div>
-                        <div className="flex flex-col items-center">
-                            <FaVuejs className="text-white w-7 h-7" />
-                            <span className="text-sm">Vue.js</span>
-                        </div>
-                        <div className="flex flex-col items-center">
-                            <FaGithub className="text-white w-7 h-7" />
-                            <span className="text-sm">GitHub</span>
-                        </div>
-                        <div className="flex flex-col items-center">
-                            <FaGitAlt className="text-white w-7 h-7" />
-                            <span className="text-sm">Git</span>
-                        </div>
+                        ))}
                     </div>
                 </div>
                 <LeftToRight>
@@ -96,12 +59,79 @@ export default function About() {
                 <div className="bg-black-200 rounded-md col-span-1 md:col-span-2 row-span-3 md:row-span-2 col-start-1 row-start-1 md:row-start-1 md:col-start-2 p-4 flex flex-col justify-start items-start">
                     <h2 className="font-semibold text-2xl mb-4">Why hire me?</h2>
                     <div>
-                        <p className="text-sm">
+                        <p className="text-sm text-input">
                             I am a fresh graduate actively seeking web developer positions. I primarily work with Next.js, but I am also proficient in the range of my Tech Stack. I am passionate about creating efficient, scalable, and user-friendly web applications.
                         </p>
                     </div>
                 </div>
             </div>
+        
         </div>
     );
 }
+
+
+const Stack = [
+    {
+        id: 1,
+        name: 'HTML5',
+        icon: <FaHtml5 className="text-white w-7 h-7 animate-iconFloat"/>,
+    },
+    {
+        id: 2,
+        name: "CSS3",
+        icon: <FaCss3Alt className="text-white w-7 h-7 animate-iconFloat"/>
+    },
+    {
+        id: 3,
+        name: "JavaScript",
+        icon: <FaJs className="text-white w-7 h-7 animate-iconFloat"/>
+    },
+    {
+        id: 4,
+        name: "TypeScript",
+        icon: <SiTypescript className="text-white w-7 h-7 animate-iconFloat"/>,
+    },
+    {
+        id: 5,
+        name: "React",
+        icon: <FaReact className="text-white w-7 h-7 animate-iconFloat"/>
+    },
+    {
+        id: 6,
+        name: "Node.js",
+        icon: <FaNode className="text-white w-7 h-7 animate-iconFloat"/>
+    },
+    {
+        id: 7,
+        name: "Next.js",
+        icon: <SiNextdotjs className="text-white w-7 h-7 animate-iconFloat"/>
+    },
+    {
+        id: 8,
+        name: "PHP",
+        icon: <FaPhp className="text-white w-7 h-7 animate-iconFloat"/>
+    },
+    {
+        id: 9,
+        name: "Laravel",
+        icon: <FaLaravel className="text-white w-7 h-7 animate-iconFloat"/>
+    },
+    {
+        id: 10,
+        name: "Vue.js",
+        icon: <FaVuejs className="text-white w-7 h-7 animate-iconFloat"/>
+    },
+    {
+        id: 11,
+        name: "GitHub",
+        icon: <FaGithub className="text-white w-7 h-7 animate-iconFloat"/>
+    },
+    {
+        id: 12,
+        name: "Git",
+        icon: <FaGitAlt className="text-white w-7 h-7 animate-iconFloat" />
+
+    },
+
+];

@@ -146,6 +146,17 @@ const config = {
             transform: "translate(calc(-50% - 0.5rem))",
           },
         },
+        float: {
+          "0%": {
+            transform: "translate(0,0)",
+          },
+          "50%": {
+            transform: "translate(0, -4px)",
+          },
+          "100%": {
+            transform: "translate(0, 0)"
+          }
+        }
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -157,6 +168,7 @@ const config = {
         third: "moveInCircle 40s linear infinite",
         fourth: "moveHorizontal 40s ease infinite",
         fifth: "moveInCircle 20s ease infinite",
+        iconFloat: "float 2s ease-in-out infinite",
         scroll:
           "scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite",
       },

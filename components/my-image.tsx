@@ -5,15 +5,16 @@ import BottomToTop from "./animated/bottom-to-top"
 function Myimage() {
   return (
     <BottomToTop>
-    <div>
+      <div className=" w-[60rem] h-full">
         <Image
-        width={4000}
-        height={4000}
-        src='/3portfolio.png'
-        alt="Picture of the author"
+          width={4000}
+          height={4000}
+          src='/3portfolio.png'
+          alt="Picture of the author"
+         className="w-full h-full object-cover"
         />
-    </div>
-  </BottomToTop>
+      </div>
+    </BottomToTop>
   )
 }
 
