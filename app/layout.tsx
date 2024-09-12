@@ -4,6 +4,7 @@ import "./globals.css";
 
 import Header from "@/components/header";
 import Navbar from "@/components/navbar";
+import ActiveSectionContextProvider from "@/context/active-section-context";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,12 +19,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="dark !scroll-smooth">
       <body className={inter.className}>
         <main className="relative overflow-hidden bg-slate-950">
-        <Navbar/>
-        <Header/>
-        {children}
+          <ActiveSectionContextProvider>
+          <Navbar/>
+          <Header/>
+          {children}
+          </ActiveSectionContextProvider>
         </main>
         </body>
     </html>

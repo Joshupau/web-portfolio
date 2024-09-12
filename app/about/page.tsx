@@ -59,7 +59,7 @@ export default function About() {
                 <div className="bg-black-200 rounded-md col-span-1 md:col-span-2 row-span-3 md:row-span-2 col-start-1 row-start-1 md:row-start-1 md:col-start-2 p-4 flex flex-col justify-start items-start">
                     <h2 className="font-semibold text-2xl mb-4">Why hire me?</h2>
                     <div>
-                        <p className="text-sm text-input">
+                        <p className="text-sm">
                             I am a fresh graduate actively seeking web developer positions. I primarily work with Next.js, but I am also proficient in the range of my Tech Stack. I am passionate about creating efficient, scalable, and user-friendly web applications.
                         </p>
                     </div>
