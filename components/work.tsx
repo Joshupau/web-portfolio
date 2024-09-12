@@ -26,7 +26,7 @@ export default function Work() {
         }}
         > 
           <h1 className="font-bold text-3xl md:text-5xl bg-clip-text text-transparent bg-gradient-to-b from-slate-100 to-slate-500">
-            What I've Built
+            What I&apos;ve Built
           </h1>
           <p className="text-sm md:text-lg text-slate-400">
             This section showcases my diverse portfolio of web applications,

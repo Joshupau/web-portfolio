@@ -27,7 +27,7 @@ function TabsAbout() {
           <TabsContent value='education'>
               <h3 className="text-xl font-semibold my-4 mt-4">Ateneo de Zamboanga University (2020-2024)</h3>
               <ul className="list-disc list-inside space-y-1 pl-4">
-                <li ><strong className="font-medium">Degree:</strong> Bachelor's of Science in Information Technology</li>
+                <li ><strong className="font-medium">Degree:</strong> Bachelor&apos;s of Science in Information Technology</li>
                 <li ><strong className="font-medium">Honors:</strong> Cum Laude</li>
               </ul>
               <h3 className="text-xl font-semibold my-4 mt-4">Ateneo de Zamboanga University SHS (2018-2020)</h3>

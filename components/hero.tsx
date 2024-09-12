@@ -20,7 +20,7 @@ function HeroBanner() {
         <div className="w-full max-w-prose">
         <h1 className="font-bold">
           <span className="text-4xl mb-2 block">
-            Hello, I'm <br/>
+            Hello, I&apos;m <br/>
           </span>
           <span className="text-6xl mb-4 block">
             Joshua  <span className="bg-clip-text text-transparent bg-yellow-200">

@@ -63,7 +63,7 @@ function Contact() {
           once: true,
         }}
         >
-          Don't Hesitate to <span className="bg-clip-text text-transparent bg-yellow-200">
+          Don&apos;t Hesitate to <span className="bg-clip-text text-transparent bg-yellow-200">
             Reach Out
           </span>
         </motion.h2>
