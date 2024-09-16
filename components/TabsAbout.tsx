@@ -1,8 +1,8 @@
 
 import React from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Stack } from '@/lib/data';
-
+import { FaHome, FaUser, FaBriefcase, FaEnvelope, FaJs, FaReact, FaNode, FaPhp, FaLaravel, FaVuejs, FaGithub, FaGitAlt, FaHtml5, FaCss3Alt  } from 'react-icons/fa';
+import { SiTypescript, SiNextdotjs } from 'react-icons/si';
 import { motion } from 'framer-motion';
 
 import { fadeInanimationVariant } from '@/lib/data';
@@ -63,3 +63,67 @@ function TabsAbout() {
 export default TabsAbout
 
 
+export const Stack = [
+  {
+      id: 1,
+      name: 'HTML5',
+      icon: <FaHtml5 className="text-white w-7 h-7 animate-iconFloat"/>,
+  },
+  {
+      id: 2,
+      name: "CSS3",
+      icon: <FaCss3Alt className="text-white w-7 h-7 animate-iconFloat"/>
+  },
+  {
+      id: 3,
+      name: "JavaScript",
+      icon: <FaJs className="text-white w-7 h-7 animate-iconFloat"/>
+  },
+  {
+      id: 4,
+      name: "TypeScript",
+      icon: <SiTypescript className="text-white w-7 h-7 animate-iconFloat"/>,
+  },
+  {
+      id: 5,
+      name: "React",
+      icon: <FaReact className="text-white w-7 h-7 animate-iconFloat"/>
+  },
+  {
+      id: 6,
+      name: "Node.js",
+      icon: <FaNode className="text-white w-7 h-7 animate-iconFloat"/>
+  },
+  {
+      id: 7,
+      name: "Next.js",
+      icon: <SiNextdotjs className="text-white w-7 h-7 animate-iconFloat"/>
+  },
+  {
+      id: 8,
+      name: "PHP",
+      icon: <FaPhp className="text-white w-7 h-7 animate-iconFloat"/>
+  },
+  {
+      id: 9,
+      name: "Laravel",
+      icon: <FaLaravel className="text-white w-7 h-7 animate-iconFloat"/>
+  },
+  {
+      id: 10,
+      name: "Vue.js",
+      icon: <FaVuejs className="text-white w-7 h-7 animate-iconFloat"/>
+  },
+  {
+      id: 11,
+      name: "GitHub",
+      icon: <FaGithub className="text-white w-7 h-7 animate-iconFloat"/>
+  },
+  {
+      id: 12,
+      name: "Git",
+      icon: <FaGitAlt className="text-white w-7 h-7 animate-iconFloat" />
+
+  },
+
+];
