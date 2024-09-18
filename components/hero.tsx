@@ -45,7 +45,7 @@ function HeroBanner() {
 
           <LeftToRight>
             <div className="flex items-center gap-2">
-              <a href="/resume.pdf" download="cv">
+              <a href="/Resume.pdf" download="cv">
               <MagicButton 
                title="Download CV"
                icon={<IoMdDownload className="w-5 h-5"/>}
