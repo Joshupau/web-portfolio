@@ -86,8 +86,17 @@ function isLowQualityText(text: string): boolean {
 function Contact() {
   const [state, handleSubmit] = useForm("xjkbzdye");
   const [isHovered, setIsHovered] = useState(false);
-  const [lastSubmittedAt, setLastSubmittedAt] = useState<number | null>(null);
-  const [now, setNow] = useState<number>(Date.now());
+  const [lastSubmittedAt, setLastSubmittedAt] = useState<number | null>(() => {
+    if (typeof window === 'undefined') return null;
+    const stored = window.localStorage.getItem(RATE_LIMIT_STORAGE_KEY);
+    if (!stored) return null;
+    const parsed = Number(stored);
+    if (!Number.isNaN(parsed) && parsed > 0) {
+      return parsed;
+    }
+    return null;
+  });
+  const [now, setNow] = useState<number>(() => Date.now());
   const [values, setValues] = useState<FormValues>({
     email: '',
     subject: '',
@@ -101,19 +110,6 @@ function Contact() {
   const cooldownRemainingSec = Math.ceil(cooldownRemainingMs / 1000);
 
   const { ref } = useSectionInView("Contact");
-
-  useEffect(() => {
-    const stored = window.localStorage.getItem(RATE_LIMIT_STORAGE_KEY);
-    if (!stored) {
-      return;
-    }
-
-    const parsed = Number(stored);
-    if (!Number.isNaN(parsed) && parsed > 0) {
-      setLastSubmittedAt(parsed);
-      setNow(Date.now());
-    }
-  }, []);
 
   useEffect(() => {
     if (cooldownRemainingMs <= 0) {

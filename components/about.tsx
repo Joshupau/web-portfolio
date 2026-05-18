@@ -46,7 +46,7 @@ function About() {
                 Backend & Fintech Software Developer with proven expertise in building scalable Node.js applications, double-entry accounting systems, and Web3 integrations. Specialized in RESTful APIs, real-time communication, and payment processing with a strong focus on clean architecture and high-concurrency systems.
                 </p>
                 <p className='mt-4'>
-                I'm passionate about solving complex financial and technical challenges while mentoring others in full-stack development. Outside of work, I enjoy online gaming, anime, and spending time with family and friends.
+                I&rsquo;m passionate about solving complex financial and technical challenges while mentoring others in full-stack development. Outside of work, I enjoy online gaming, anime, and spending time with family and friends.
                 </p>
                 
                 <div className='mt-6 grid grid-cols-2 gap-6 text-sm'>
