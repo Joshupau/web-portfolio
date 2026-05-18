@@ -92,22 +92,14 @@ export const Stack = [
 export const projects = [
     {
       id: 1,
-      title: "Nursesync - Related Learning Experience - LMS",
-      des: "Enhance nursing education in the Philippines with our cutting-edge Related Learning Experience LMS. Designed specifically for nursing students, this platform streamlines the learning process, offering interactive modules, real-time assessments, and comprehensive resources tailored to the Philippine healthcare system. Empower the next generation of nurses with a tool that bridges theory and practice seamlessly.",
-      img: "/work11.png",
-      iconLists: ["/next.svg", "/tail.svg", "/ts.svg","shadcn.jfif", "/fm.svg"],
-      link: "https://rle-lms.vercel.app",
-    },  
-    {
-      id: 2,
-      title: "Project Title",
-      des: "Simplify your video conferencing experience with Yoom. Seamlessly connect with colleagues and friends.",
-      img: "/p2.svg",
-      iconLists: ["/next.svg", "/tail.svg", "/ts.svg", "/stream.svg", "/c.svg"],
-      link: "/ui.yoom.com",
+      title: "FroFinX",
+      des: "A full-featured financial management platform built with Next.js, MongoDB, an Express.js backend, and full-stack TypeScript, featuring Groq-powered AI insights and deployed on Render.",
+      img: "/work12-2.png",
+      iconLists: ["/next.svg", "/ts.svg", "/c.svg", "/host.svg", "/cloud.svg"],
+      link: "https://frofinx.onrender.com/signin",
     },
     {
-      id: 3,
+      id: 2,
       title: "Project Title",
       des: "A REAL Software-as-a-Service app with AI features and a payments and credits system using the latest tech stack.",
       img: "/p3.svg",
@@ -115,13 +107,21 @@ export const projects = [
       link: "/ui.aiimg.com",
     },
     {
-      id: 4,
+      id: 3,
       title: "Project Title",
       des: "Recreated the Apple iPhone 15 Pro website, combining GSAP animations and Three.js 3D effects..",
       img: "/p4.svg",
       iconLists: ["/next.svg", "/tail.svg", "/ts.svg", "/three.svg", "/gsap.svg"],
       link: "/ui.apple.com",
     },
+    {
+      id: 4,
+      title: "Nursesync - Related Learning Experience - LMS",
+      des: "Enhance nursing education in the Philippines with our cutting-edge Related Learning Experience LMS. Designed specifically for nursing students, this platform streamlines the learning process, offering interactive modules, real-time assessments, and comprehensive resources tailored to the Philippine healthcare system. Empower the next generation of nurses with a tool that bridges theory and practice seamlessly.",
+      img: "/work11.png",
+      iconLists: ["/next.svg", "/tail.svg", "/ts.svg", "/shadcn.jfif", "/fm.svg"],
+      link: "https://rle-lms.vercel.app",
+    } 
   ];
 
   export const fadeInanimationVariant = {

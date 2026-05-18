@@ -4,6 +4,8 @@ import { PinContainer } from '@/components/ui/3d-pin';
 import React from 'react'
 import { fadeInanimationVariant, projects } from '@/lib/data';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
+
   function Previousworks() {
     return (
       <div className=""> 
@@ -22,10 +24,12 @@ import { motion } from 'framer-motion';
             >
               <PinContainer title={link} href={link}>
                 <div className='relative flex items-center justify-center sm:w-60 w-[70vw] overflow-hidden h-[15vh] lg:w-72 md:h-[15vh]'>
-                  <img
+                  <Image
                     src={img}
                     alt={title}
                     className='z-10 absolute bottom-0'
+                    width={288}
+                    height={108}
                   />
                 </div>
                 <h1 className='font-bold lg:text-2xl md:text-xl text-base line-clamp-1'>
@@ -40,7 +44,7 @@ import { motion } from 'framer-motion';
                       <div key={icon} className='border border-white/[0.2] rounded-full bg-black lg:w-10 lg:h-10 w-8 h-8 flex justify-center items-center'
                        style={{transform: `translateX(-${5 * index * 2}px)`}}
                       >
-                        <img src={icon} alt={icon} className='p-2' />
+                        <Image src={icon} alt={icon} className='p-2' width={40} height={40} />
                       </div>
                     ))}
                   </div>

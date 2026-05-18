@@ -1,8 +1,8 @@
 
 import React from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { FaHome, FaUser, FaBriefcase, FaEnvelope, FaJs, FaReact, FaNode, FaPhp, FaLaravel, FaVuejs, FaGithub, FaGitAlt, FaHtml5, FaCss3Alt  } from 'react-icons/fa';
-import { SiTypescript, SiNextdotjs } from 'react-icons/si';
+import { FaHome, FaUser, FaBriefcase, FaEnvelope, FaJs, FaReact, FaNode, FaPhp, FaLaravel, FaVuejs, FaGithub, FaGitAlt, FaHtml5, FaCss3Alt, FaDatabase  } from 'react-icons/fa';
+import { SiTypescript, SiNextdotjs, SiMongodb, SiSocketdotio } from 'react-icons/si';
 import { motion } from 'framer-motion';
 
 import { fadeInanimationVariant } from '@/lib/data';
@@ -17,20 +17,29 @@ function TabsAbout() {
           <TabsTrigger value='education'>Education</TabsTrigger>
           </TabsList>
           <TabsContent value='experience'>
-              <h3 className="text-xl font-semibold my-4 mt-4">DICT Region-IX - Intern (300 hours)</h3>
-              <ul className="list-disc list-inside space-y-1  pl-4">
-                <li><strong className="font-medium ">Role:</strong> Full-Stack Web Developer</li>
-                <li><strong className="font-medium ">Project:</strong> Developed a QR Event Attendance Management system</li>
-                <li><strong className="font-medium ">Additional Duties:</strong> Tech Support</li>
-              </ul>        
+            <h3 className="text-xl font-semibold my-4 mt-4">Axcela PH | Junior Backend Developer</h3>
+              <p className="text-sm text-white/70 mb-2">Nov 2024 - May 2026</p>
+              <ul className="list-disc list-inside space-y-1 pl-4">
+                <li>Built a double-entry accounting system with automated interest and loan-release flows.</li>
+                <li>Developed scalable Node.js + TypeScript APIs/workers and real-time features with Socket.io.</li>
+                <li>Integrated PayPal and Web3 modules, and maintained DB health with scripts and migrations.</li>
+              </ul>
+
+              <h3 className="text-xl font-semibold my-4 mt-4">DICT - RX 9 | Full Stack Developer Intern</h3>
+              <p className="text-sm text-white/70 mb-2">Jun 2023 - Jul 2023</p>
+              <ul className="list-disc list-inside space-y-1 pl-4">
+                <li>Built an Attendance Management System using Laravel and Vue.js.</li>
+              </ul>
           </TabsContent>
           <TabsContent value='education'>
-              <h3 className="text-xl font-semibold my-4 mt-4">Ateneo de Zamboanga University (2020-2024)</h3>
+              <h3 className="text-xl font-semibold my-4 mt-4">Ateneo de Zamboanga University</h3>
+              <p className="text-sm text-white/70 mb-2">2020 - 2024</p>
               <ul className="list-disc list-inside space-y-1 pl-4">
                 <li ><strong className="font-medium">Degree:</strong> Bachelor&apos;s of Science in Information Technology</li>
                 <li ><strong className="font-medium">Honors:</strong> Cum Laude</li>
               </ul>
-              <h3 className="text-xl font-semibold my-4 mt-4">Ateneo de Zamboanga University SHS (2018-2020)</h3>
+              <h3 className="text-xl font-semibold my-4 mt-4">Ateneo de Zamboanga University SHS</h3>
+              <p className="text-sm text-white/70 mb-2">2018 - 2020</p>
               <ul className="list-disc list-inside space-y-1 pl-4">
               <li ><strong className="font-medium">Strand:</strong> STEM Strand</li>
               </ul>
@@ -66,43 +75,43 @@ export default TabsAbout
 export const Stack = [
   {
       id: 1,
-      name: 'HTML5',
-      icon: <FaHtml5 className="text-white w-7 h-7 animate-iconFloat"/>,
+      name: 'JavaScript',
+      icon: <FaJs className="text-white w-7 h-7 animate-iconFloat"/>,
   },
   {
       id: 2,
-      name: "CSS3",
-      icon: <FaCss3Alt className="text-white w-7 h-7 animate-iconFloat"/>
-  },
-  {
-      id: 3,
-      name: "JavaScript",
-      icon: <FaJs className="text-white w-7 h-7 animate-iconFloat"/>
-  },
-  {
-      id: 4,
       name: "TypeScript",
       icon: <SiTypescript className="text-white w-7 h-7 animate-iconFloat"/>,
   },
   {
-      id: 5,
-      name: "React",
-      icon: <FaReact className="text-white w-7 h-7 animate-iconFloat"/>
-  },
-  {
-      id: 6,
+      id: 3,
       name: "Node.js",
       icon: <FaNode className="text-white w-7 h-7 animate-iconFloat"/>
   },
   {
-      id: 7,
+      id: 4,
+      name: "React",
+      icon: <FaReact className="text-white w-7 h-7 animate-iconFloat"/>,
+  },
+  {
+      id: 5,
       name: "Next.js",
       icon: <SiNextdotjs className="text-white w-7 h-7 animate-iconFloat"/>
   },
   {
+      id: 6,
+      name: "MongoDB",
+      icon: <SiMongodb className="text-white w-7 h-7 animate-iconFloat"/>
+  },
+  {
+      id: 7,
+      name: "Socket.io",
+      icon: <SiSocketdotio className="text-white w-7 h-7 animate-iconFloat"/>,
+  },
+  {
       id: 8,
-      name: "PHP",
-      icon: <FaPhp className="text-white w-7 h-7 animate-iconFloat"/>
+      name: "SQL",
+      icon: <FaDatabase className="text-white w-7 h-7 animate-iconFloat"/>
   },
   {
       id: 9,
@@ -116,14 +125,12 @@ export const Stack = [
   },
   {
       id: 11,
-      name: "GitHub",
-      icon: <FaGithub className="text-white w-7 h-7 animate-iconFloat"/>
+      name: "PHP",
+      icon: <FaPhp className="text-white w-7 h-7 animate-iconFloat"/>
   },
   {
       id: 12,
       name: "Git",
       icon: <FaGitAlt className="text-white w-7 h-7 animate-iconFloat" />
-
   },
-
 ];
