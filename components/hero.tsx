@@ -34,7 +34,9 @@ function HeroBanner() {
                 'A Full-Stack Developer',
                 2000,
                 'A UI/UX Designer',
-                2000
+                2000,
+                'A Backend Developer',
+                2000,
               ]}
               wrapper="span"
               speed={50}
