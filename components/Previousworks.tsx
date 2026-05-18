@@ -8,12 +8,12 @@ import Image from 'next/image';
 
   function Previousworks() {
     return (
-      <div className=""> 
-        <div className='grid auto-cols-[70%] align-center justify-center grid-flow-row sm:grid-cols-2 gap-16'>
+      <div className="w-full"> 
+        <div className='grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-12 place-items-center sm:place-items-stretch'>
           {projects.map(({ id, title, des, img, iconLists, link }, index) => (
             <motion.div 
             key={id} 
-            className='text-white'
+            className='text-white w-full flex justify-center sm:justify-start'
             variants={fadeInanimationVariant}
             initial="initial"
             whileInView="animate"
@@ -22,12 +22,12 @@ import Image from 'next/image';
             }}
             custom={index}
             >
-              <PinContainer title={link} href={link}>
-                <div className='relative flex items-center justify-center sm:w-60 w-[70vw] overflow-hidden h-[15vh] lg:w-72 md:h-[15vh]'>
+              <PinContainer title={link} href={link} containerClassName='w-full flex justify-center sm:justify-start'>
+                <div className='relative flex items-center justify-center w-[88vw] max-w-sm sm:w-60 sm:max-w-none lg:w-72 h-40 md:h-36 overflow-hidden'>
                   <Image
                     src={img}
                     alt={title}
-                    className='z-10 absolute bottom-0'
+                    className='z-10 absolute bottom-0 h-auto w-full object-contain'
                     width={288}
                     height={108}
                   />

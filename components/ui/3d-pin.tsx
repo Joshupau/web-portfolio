@@ -17,6 +17,7 @@ export const PinContainer = ({
   className?: string;
   containerClassName?: string;
 }) => {
+  const isExternalLink = Boolean(href && /^https?:\/\//.test(href));
   const [transform, setTransform] = useState(
     "translate(-50%,-50%) rotateX(0deg)"
   );
@@ -37,6 +38,8 @@ export const PinContainer = ({
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       href={href || "/"}
+      target={isExternalLink ? "_blank" : undefined}
+      rel={isExternalLink ? "noopener noreferrer" : undefined}
     >
       <div
         style={{
