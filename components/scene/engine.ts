@@ -348,8 +348,9 @@ export function createScene(container: HTMLElement, opts: SceneOptions): SceneHa
       fx = 0.5;
       fy = 0.5;
     } else {
-      share = 0.55;
-      fx = 0.755;
+      const tight = aspect < 1.5;
+      share = tight ? 0.42 : 0.55;
+      fx = tight ? 0.79 : 0.755;
       fy = 0.52;
     }
     vw = bw / share;
