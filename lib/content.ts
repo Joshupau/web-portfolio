@@ -3,7 +3,7 @@
 export const person = {
   name: "Joshua Paul De Guzman",
   location: "Zamboanga City, Philippines",
-  github: "https://github.com/LonelyDevas",
+  github: "https://github.com/Joshupau",
   linkedin: "https://www.linkedin.com/in/joshua-paul-de-guzman/",
   resume: "/Resume.pdf",
 };
@@ -62,8 +62,8 @@ export const projects: Project[] = [
     role: "Design and development, solo",
     stack: ["Next.js", "Ionic", "Capacitor", "PGlite", "Supabase", "TanStack Query", "Tesseract.js", "Groq"],
     links: [
-      { label: "Source (app)", href: "https://github.com/LonelyDevas/fico" },
-      { label: "Source (API)", href: "https://github.com/LonelyDevas/fico-api" },
+      { label: "Source (app)", href: "https://github.com/Joshupau/fico" },
+      { label: "Source (API)", href: "https://github.com/Joshupau/fico-api" },
       { label: "Live app", href: "https://fico-pearl.vercel.app" },
     ],
     sections: [
@@ -151,7 +151,7 @@ export const projects: Project[] = [
     stack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion"],
     links: [
       { label: "Live app", href: "https://rle-lms.vercel.app" },
-      { label: "Source", href: "https://github.com/LonelyDevas/RLE-LMS" },
+      { label: "Source", href: "https://github.com/Joshupau/RLE-LMS" },
     ],
     sections: [
       {
