@@ -4,7 +4,11 @@ import "@fontsource/ibm-plex-sans/400.css";
 import "@fontsource/ibm-plex-sans/500.css";
 import "@fontsource/ibm-plex-sans/600.css";
 import "@fontsource/ibm-plex-mono/400.css";
+import "@fontsource-variable/archivo/wdth.css";
+import "@fontsource/newsreader/400.css";
+import "@fontsource/newsreader/500.css";
 import "./globals.css";
+import "./flagship.css";
 import SiteHeader from "@/components/SiteHeader";
 import { person } from "@/lib/content";
 

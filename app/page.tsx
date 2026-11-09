@@ -1,37 +1,95 @@
 import Link from "next/link";
 import ContactForm from "@/components/ContactForm";
-import { education, experience, focus, intro, person, projects } from "@/lib/content";
+import Frame from "@/components/Frame";
+import QuickAdd from "@/components/QuickAdd";
+import SyncDemo from "@/components/SyncDemo";
+import { education, experience, focus, person, projects } from "@/lib/content";
+
+const accent: Record<string, string> = { fico: "#0a8f6a", kofi: "#6b3df0", nursesync: "#1167d8" };
 
 export default function Home() {
+  const [fico, kofi, nurse] = projects;
   return (
     <>
-      <section className="hero wrap">
-        <h1>{intro.headline}</h1>
-        <p>{intro.body}</p>
+      <section className="x-hero wrap">
+        <h1 className="x-name">
+          <span>Joshua Paul</span>
+          <span>De Guzman</span>
+        </h1>
+        <div className="x-hero__grid">
+          <p className="x-tag">
+            Full-stack developer. I build software with AI, and I’m getting better at building AI. Backend and fintech, from Zamboanga.
+          </p>
+          <QuickAdd />
+        </div>
+        <p className="x-demo-note">That box is live. It’s a small copy of how Fico reads an expense.</p>
       </section>
 
-      <section id="work" className="block">
+      <section id="work" className="x-work">
         <div className="wrap">
-          <h2>Work</h2>
-          <div className="statement">
-            {projects.map((p, i) => (
-              <Link key={p.slug} href={`/work/${p.slug}`} className="entry" style={{ ["--i" as string]: i }}>
-                <span className="entry__title">
-                  {p.name}
-                  <span className="entry__leader" aria-hidden="true" />
-                  <span className="entry__year">{p.year}</span>
-                </span>
-                <span className="entry__summary">{p.summary}</span>
-                <span className="entry__stack">{p.stack.slice(0, 4).join(", ")}</span>
+          <article className="x-proj" style={{ ["--c" as string]: accent.fico }}>
+            <div className="x-proj__text">
+              <p className="x-proj__year">{fico.year}</p>
+              <h2>{fico.name}</h2>
+              <p>{fico.lead}</p>
+              <ul className="x-stack">
+                {fico.stack.slice(0, 6).map((s) => (
+                  <li key={s}>{s}</li>
+                ))}
+              </ul>
+              <Link href={`/work/${fico.slug}`} className="x-link">
+                Read how it works
               </Link>
-            ))}
-          </div>
+            </div>
+            <div className="x-proj__demo">
+              <p className="x-demo-title">Try the offline part</p>
+              <SyncDemo />
+            </div>
+          </article>
+
+          <article className="x-proj x-proj--flip" style={{ ["--c" as string]: accent.kofi }}>
+            <div className="x-proj__text">
+              <p className="x-proj__year">{kofi.year}</p>
+              <h2>Kofi</h2>
+              <p>{kofi.lead}</p>
+              <ul className="x-stack">
+                {kofi.stack.slice(0, 6).map((s) => (
+                  <li key={s}>{s}</li>
+                ))}
+              </ul>
+              <Link href={`/work/${kofi.slug}`} className="x-link">
+                Read the case study
+              </Link>
+            </div>
+            <div className="x-proj__demo">
+              <Frame src="/img/kofi.webp" alt="The Kofi marketplace home page" width={1600} height={979} host="kofi-nft-market.vercel.app" />
+            </div>
+          </article>
+
+          <article className="x-proj" style={{ ["--c" as string]: accent.nursesync }}>
+            <div className="x-proj__text">
+              <p className="x-proj__year">{nurse.year}</p>
+              <h2>{nurse.name}</h2>
+              <p>{nurse.lead}</p>
+              <ul className="x-stack">
+                {nurse.stack.map((s) => (
+                  <li key={s}>{s}</li>
+                ))}
+              </ul>
+              <Link href={`/work/${nurse.slug}`} className="x-link">
+                Read the case study
+              </Link>
+            </div>
+            <div className="x-proj__demo">
+              <Frame src="/img/nursesync.webp" alt="The NurseSync dashboard" width={1600} height={804} host="rle-lms.vercel.app" />
+            </div>
+          </article>
         </div>
       </section>
 
       <section id="approach" className="block">
         <div className="wrap">
-          <h2>How I work</h2>
+          <h2 className="x-h2">How I work</h2>
           <div className="history">
             {focus.map((f) => (
               <div className="job" key={f.label}>
@@ -52,7 +110,7 @@ export default function Home() {
 
       <section id="experience" className="block">
         <div className="wrap">
-          <h2>Experience</h2>
+          <h2 className="x-h2">Experience</h2>
           <div className="history">
             {experience.map((job) => (
               <div className="job" key={job.org}>
@@ -84,9 +142,9 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="contact" className="block">
+      <section id="contact" className="block x-contact">
         <div className="wrap">
-          <h2>Contact</h2>
+          <h2 className="x-h2">Let’s talk</h2>
           <div className="contact">
             <div className="contact__aside">
               <span>{person.location}</span>
