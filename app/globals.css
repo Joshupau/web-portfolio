@@ -506,6 +506,17 @@ a:hover {
   border-radius: 4px;
 }
 
+/* Portrait (phone) screenshots: show at phone width, centered */
+.figure--phone img {
+  max-width: 300px;
+  margin-inline: auto;
+  border-radius: 28px;
+}
+
+.figure--phone figcaption {
+  text-align: center;
+}
+
 .figure figcaption {
   margin-top: 0.6rem;
   font-size: var(--step--1);

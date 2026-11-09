@@ -73,6 +73,13 @@ export const projects: Project[] = [
           "Budgeting apps lose me in the first week. Logging an expense feels like filling in a form, and anything that waits on a server is slow on a bus with one bar of signal.",
           "I wanted one that opens instantly, accepts an expense the way I’d text it, and answers “how much can I spend today?” from data already on the phone.",
         ],
+        figure: {
+          src: "/img/fico-mobile-dashboard.webp",
+          alt: "The Fico dashboard with total balance, safe-to-spend and weekly spending",
+          width: 376,
+          height: 831,
+          caption: "The home screen: balance, what’s safe to spend today, and bills due before month end.",
+        },
       },
       {
         heading: "A Postgres database on the device",
@@ -95,12 +102,26 @@ export const projects: Project[] = [
           "Quick-add takes messages like “80 lunch cash” or “transfer 2k bdo to gotyme”, in English or Filipino, and turns them into transactions with the right amount, wallet and category. It runs entirely on the device.",
           "Receipts can be scanned in the app with Tesseract.js, and a chat-style agent answers questions about the same local data.",
         ],
+        figure: {
+          src: "/img/fico-mobile-activity.webp",
+          alt: "The Fico activity list grouped by day with filters",
+          width: 376,
+          height: 831,
+          caption: "Every transaction, grouped by day, with filters by wallet and category.",
+        },
       },
       {
         heading: "Letting an AI read the numbers",
         body: [
           "A separate read-only MCP server exposes my finances to an AI assistant behind a token: spending by category, upcoming bills, goals, runway and a safe-to-spend figure. I use it to plan real purchases and a move to Manila.",
         ],
+        figure: {
+          src: "/img/fico-mobile-insights.webp",
+          alt: "The Fico insights page with a category mix chart and period summary",
+          width: 376,
+          height: 831,
+          caption: "Insights: where the month’s money went, from the same data the AI reads.",
+        },
       },
       {
         heading: "What’s next",

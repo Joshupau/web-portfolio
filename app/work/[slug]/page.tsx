@@ -80,7 +80,7 @@ export default async function CaseStudy({ params }: Props) {
                   </figure>
                 )}
                 {s.figure && s.figure !== "architecture" && (
-                  <figure className="figure">
+                  <figure className={s.figure.height > s.figure.width ? "figure figure--phone" : "figure"}>
                     <Image src={s.figure.src} alt={s.figure.alt} width={s.figure.width} height={s.figure.height} sizes="(max-width: 900px) 100vw, 800px" />
                     <figcaption>{s.figure.caption}</figcaption>
                   </figure>
