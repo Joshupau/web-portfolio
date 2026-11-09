@@ -5,10 +5,10 @@ import QuickAdd from "@/components/QuickAdd";
 import SyncDemo from "@/components/SyncDemo";
 import { education, experience, focus, person, projects } from "@/lib/content";
 
-const accent: Record<string, string> = { fico: "#0a8f6a", kofi: "#6b3df0", nursesync: "#1167d8" };
+const accent: Record<string, string> = { fico: "#0a8f6a", kofi: "#6b3df0" };
 
 export default function Home() {
-  const [fico, kofi, nurse] = projects;
+  const [fico, kofi] = projects;
   return (
     <>
       <section className="x-hero wrap">
@@ -63,25 +63,6 @@ export default function Home() {
             </div>
             <div className="x-proj__demo">
               <Frame src="/img/kofi.webp" alt="The Kofi marketplace home page" width={1600} height={979} host="kofi-nft-market.vercel.app" />
-            </div>
-          </article>
-
-          <article className="x-proj" style={{ ["--c" as string]: accent.nursesync }}>
-            <div className="x-proj__text">
-              <p className="x-proj__year">{nurse.year}</p>
-              <h2>{nurse.name}</h2>
-              <p>{nurse.lead}</p>
-              <ul className="x-stack">
-                {nurse.stack.map((s) => (
-                  <li key={s}>{s}</li>
-                ))}
-              </ul>
-              <Link href={`/work/${nurse.slug}`} className="x-link">
-                Read the case study
-              </Link>
-            </div>
-            <div className="x-proj__demo">
-              <Frame src="/img/nursesync.webp" alt="The NurseSync dashboard" width={1600} height={804} host="rle-lms.vercel.app" />
             </div>
           </article>
         </div>

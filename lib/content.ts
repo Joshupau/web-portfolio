@@ -141,35 +141,6 @@ export const projects: Project[] = [
       },
     ],
   },
-  {
-    slug: "nursesync",
-    name: "NurseSync",
-    year: "2024",
-    summary: "Learning platform for nursing students",
-    lead: "A learning management system for the Related Learning Experience program in nursing education.",
-    role: "Lead developer",
-    stack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion"],
-    links: [
-      { label: "Live app", href: "https://rle-lms.vercel.app" },
-      { label: "Source", href: "https://github.com/Joshupau/RLE-LMS" },
-    ],
-    sections: [
-      {
-        heading: "What it does",
-        body: [
-          "Nursing students at Ateneo de Zamboanga University use it for interactive modules, assessments and learning resources built around Philippine healthcare practice.",
-          "I was the lead developer on the Next.js system.",
-        ],
-        figure: {
-          src: "/img/nursesync.webp",
-          alt: "The NurseSync dashboard",
-          width: 1600,
-          height: 804,
-          caption: "The student dashboard.",
-        },
-      },
-    ],
-  },
 ];
 
 export const experience = [
