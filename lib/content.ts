@@ -1,7 +1,7 @@
 // Everything the site says lives here. Edit this file, not the components.
 
 export const person = {
-  name: "Joshua De Guzman",
+  name: "Joshua Paul De Guzman",
   location: "Zamboanga City, Philippines",
   github: "https://github.com/LonelyDevas",
   linkedin: "https://www.linkedin.com/in/joshua-paul-de-guzman/",
@@ -173,6 +173,15 @@ export const projects: Project[] = [
 ];
 
 export const experience = [
+  {
+    org: "Dee Global Software Corporation",
+    role: "Software Developer",
+    period: "Jun 2026 to present",
+    points: [
+      "Maintain and extend the company’s production point-of-sale system: bug fixes, feature updates and ongoing improvements.",
+      "Primary on-site developer, taking tasks from requirements through to delivery.",
+    ],
+  },
   {
     org: "Axcela PH",
     role: "Junior Backend Developer",
