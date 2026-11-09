@@ -9,8 +9,8 @@ export const person = {
 };
 
 export const intro = {
-  headline: "I build full-stack software with AI in the loop, and I’m going deeper into AI itself.",
-  body: "Full-stack developer in Zamboanga City. I use AI tools every day to design, write and test software, and I’ve shipped finance systems with it: a double-entry accounting backend with loan schedules, and an offline-first finance app with its own AI features.",
+  headline: "I build fintech software with AI in the loop.",
+  body: "Full-stack developer in Zamboanga City. I use AI tools every day to design, write and test software, and I check what they produce with tests. I’ve shipped finance systems this way: a double-entry accounting backend with loan schedules, and an offline-first finance app with its own AI features.",
 };
 
 export const focus = [

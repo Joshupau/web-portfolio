@@ -1,0 +1,35 @@
+/* v3 design tokens. Shared by every component. Owned by the orchestrator; do not edit. */
+:root {
+  --bg: #12161c;
+  --panel: #181d25;
+  --panel-2: #1e2430;
+  --line: #2a313c;
+  --text: #dfe5ee;
+  --dim: #8b96a7;
+  --amber: #f2b258;   /* tool names, commands */
+  --ice: #7cc0ff;     /* paths, links, focus */
+  --mint: #7ed3b2;    /* success / synced */
+  --rose: #f08a8a;    /* errors / offline */
+  --violet: #b79cff;  /* secondary accent */
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --font-display: "Archivo Variable", "Archivo", system-ui, sans-serif;
+  --font-sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --radius: 8px;
+  --gutter: clamp(1rem, 4vw, 2.5rem);
+  --wide: 76rem;
+}
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #eef1f5;
+    --panel: #ffffff;
+    --panel-2: #e6eaf0;
+    --line: #cfd6e0;
+    --text: #1a2330;
+    --dim: #5b6677;
+    --amber: #9a5b00;
+    --ice: #0b5fb3;
+    --mint: #12795a;
+    --rose: #b3322f;
+    --violet: #5b3fc0;
+  }
+}

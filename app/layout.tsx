@@ -1,24 +1,29 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/react";
 import "@fontsource/ibm-plex-sans/400.css";
 import "@fontsource/ibm-plex-sans/500.css";
 import "@fontsource/ibm-plex-sans/600.css";
 import "@fontsource/ibm-plex-mono/400.css";
+import "@fontsource/ibm-plex-mono/500.css";
 import "@fontsource-variable/archivo/wdth.css";
-import "@fontsource/newsreader/400.css";
-import "@fontsource/newsreader/500.css";
+import "./theme.css";
 import "./globals.css";
-import "./flagship.css";
 import SiteHeader from "@/components/SiteHeader";
 import { person } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: {
-    default: `${person.name}, full-stack developer`,
+    default: `${person.name}, fintech developer`,
     template: `%s | ${person.name}`,
   },
   description:
-    "Full-stack developer in Zamboanga City. Accounting and loan systems, real-time backends, and local-first finance apps.",
+    "Full-stack developer in Zamboanga City building fintech software with AI in the loop: accounting and loan systems, real-time backends, and an offline-first finance app.",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  colorScheme: "dark light",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -31,14 +36,15 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <SiteHeader />
         <main id="main">{children}</main>
         <footer className="site-footer">
-          <div className="wrap">
+          <div className="wrap site-footer__row">
             <span>
               © {new Date().getFullYear()} {person.name}
             </span>
-            <span className="site-footer__links">
+            <nav aria-label="Elsewhere" className="site-footer__links">
               <a href={person.github}>GitHub</a>
               <a href={person.linkedin}>LinkedIn</a>
-            </span>
+              <a href={person.resume}>Résumé</a>
+            </nav>
           </div>
         </footer>
         <Analytics />

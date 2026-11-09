@@ -26,8 +26,11 @@ export default async function CaseStudy({ params }: Props) {
     <>
       <div className="case__head wrap">
         <Link href="/#work" className="case__back">
-          Back to work
+          <span aria-hidden="true">&lt;- </span>back to work
         </Link>
+        <p className="case__path" aria-hidden="true">
+          ~/work/{project.slug}/README.md
+        </p>
         <h1>{project.name}</h1>
         <p>{project.lead}</p>
       </div>
