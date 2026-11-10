@@ -1,19 +1,50 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
+import MiniScene from "@/components/scene/MiniScene";
 import OutboxDemo from "./OutboxDemo";
 import { education, person } from "@/lib/content";
-import { fico_, jobs, kofi_, nowNext, prompt, statusMark, tasks, type TaskStatus } from "@/lib/session";
+import { fico_, jobs, kofi_, kkyubbi_, nowNext, prompt, statusMark, tasks, type TaskStatus } from "@/lib/session";
 import s from "./session.module.css";
 
+type Phase = "static" | "wait" | "run" | "done";
+
+/** A tool call that "runs" the first time it scrolls into view: the dot spins, then the output streams in. */
 function Tool({ name, args, open = true, children }: { name: string; args: ReactNode; open?: boolean; children: ReactNode }) {
+  const ref = useRef<HTMLDetailsElement>(null);
+  const [phase, setPhase] = useState<Phase>("static");
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || !open || !("IntersectionObserver" in window)) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (el.getBoundingClientRect().top < window.innerHeight * 0.85) return; // already on screen: leave as is
+    setPhase("wait");
+    let timer = 0;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((e) => e.isIntersecting)) return;
+        io.disconnect();
+        setPhase("run");
+        timer = window.setTimeout(() => setPhase("done"), 520);
+      },
+      { rootMargin: "0px 0px -12% 0px" },
+    );
+    io.observe(el);
+    return () => {
+      io.disconnect();
+      window.clearTimeout(timer);
+    };
+  }, [open]);
+
   return (
-    <details className={s.tool} open={open}>
+    <details ref={ref} className={`${s.tool} ${s[phase]}`} open={open}>
       <summary>
         <span className={s.dot} aria-hidden="true" />
         <span className={s.name}>{name}</span>
         <span className={s.args}>({args})</span>
+        <span className={s.running} aria-hidden="true">running</span>
       </summary>
       <div className={s.result}>{children}</div>
     </details>
@@ -74,8 +105,33 @@ export default function Session() {
 
   const done = tasks.filter((t) => t.status === "done").length;
 
+  // rail progress line follows the scroll position through the transcript
+  const root = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    let raf = 0;
+    const update = () => {
+      const el = root.current;
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      const p = Math.min(1, Math.max(0, (window.innerHeight * 0.4 - r.top) / Math.max(1, r.height)));
+      el.style.setProperty("--p", p.toFixed(4));
+    };
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      cancelAnimationFrame(raf);
+    };
+  }, []);
+
   return (
-    <div className={s.session}>
+    <div className={s.session} ref={root}>
       <details
         className={s.bar}
         onClick={(e) => {
@@ -96,7 +152,7 @@ export default function Session() {
       <div className={s.transcript}>
         <section className={s.turn} aria-labelledby="s-user">
           <h2 id="s-user" className={s.sr}>The request</h2>
-          <p className={s.user}><span className={s.caret} aria-hidden="true">&gt;</span> {prompt.user}</p>
+          <p className={s.user}><span className={s.caret} aria-hidden="true">&gt;</span> {prompt.user}<span className={s.cursor} aria-hidden="true" /></p>
           <Say>{prompt.agent}</Say>
         </section>
 
@@ -169,9 +225,31 @@ export default function Session() {
           </Tool>
         </section>
 
+        <section id="kkyubbi" className={s.turn} aria-labelledby="h-kky">
+          <h2 id="h-kky" className={s.title}>Kkyubbi <Badge status="active" /></h2>
+          <Say>{kkyubbi_.sentence}</Say>
+
+          <Tool name="Run" args="module demo">
+            <p className={s.note}>{kkyubbi_.demo}</p>
+            <MiniScene kind="cube" />
+          </Tool>
+
+          <Tool name="Read" args={<Path>architecture</Path>}>
+            <ul className={s.lines}>
+              {kkyubbi_.points.map((p) => <li key={p}>{p}</li>)}
+              <li><span className={s.dim}>stack </span>{kkyubbi_.stack.join(", ")}</li>
+              <li><span className={s.dim}>status </span>{kkyubbi_.status}</li>
+            </ul>
+          </Tool>
+        </section>
+
         <section id="kofi" className={s.turn} aria-labelledby="h-kofi">
           <h2 id="h-kofi" className={s.title}>Kofi NFT Marketplace <Badge status="done" /></h2>
           <Say>{kofi_.sentence}</Say>
+          <Tool name="Run" args="mint demo">
+            <p className={s.note}>A toy version of the flow: mint a token, list it, buy it.</p>
+            <MiniScene kind="token" />
+          </Tool>
           <Tool name="Read" args={<Path>{kofi_.host}</Path>}>
             <figure className={s.browser}>
               <div className={s.browserBar} aria-hidden="true"><i /><i /><i /><span>{kofi_.host}</span></div>

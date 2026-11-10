@@ -1,13 +1,25 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import type { SceneHandle } from "./engine";
+import type { SceneHandle, SceneStats } from "./engine";
 
 /**
  * Background scene for the hero: a phone makes money records (crates), they queue in an
  * outbox lane and are replayed over a link to the server database. Offline: the link breaks
  * and the outbox fills. Online: it flushes. Decorative, so aria-hidden.
  */
-export default function LedgerScene({ className, offline }: { className?: string; offline?: boolean }) {
+export default function LedgerScene({
+  className,
+  offline,
+  onHandle,
+  onStats,
+}: {
+  className?: string;
+  offline?: boolean;
+  onHandle?: (h: SceneHandle | null) => void;
+  onStats?: (s: SceneStats) => void;
+}) {
+  const cb = useRef({ onHandle, onStats });
+  cb.current = { onHandle, onStats };
   const ref = useRef<HTMLDivElement>(null);
   const offlineRef = useRef<boolean | undefined>(offline);
   offlineRef.current = offline;
@@ -40,7 +52,12 @@ export default function LedgerScene({ className, offline }: { className?: string
       .then(({ createScene }) => {
         if (disposed) return;
         try {
-          handle = createScene(host, { reduced, getOffline: () => offlineRef.current });
+          handle = createScene(host, {
+            reduced,
+            getOffline: () => offlineRef.current,
+            onStats: (st) => cb.current.onStats?.(st),
+          });
+          cb.current.onHandle?.(handle);
         } catch {
           setFailed(true);
           return;
@@ -64,6 +81,7 @@ export default function LedgerScene({ className, offline }: { className?: string
       ro?.disconnect();
       for (const m of mqs) m.removeEventListener("change", onScheme);
       document.removeEventListener("visibilitychange", onVis);
+      cb.current.onHandle?.(null);
       handle?.dispose();
     };
   }, [reduced, rebuildKey]);

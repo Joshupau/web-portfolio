@@ -7,9 +7,26 @@ export interface SceneOptions {
   reduced: boolean;
   /** undefined means "auto demo an offline -> online cycle" */
   getOffline: () => boolean | undefined;
+  onStats?: (s: SceneStats) => void;
 }
 
+export interface SceneStats {
+  offline: boolean;
+  queued: number;
+  synced: number;
+}
+export type Pick = "phone" | "link" | "server" | null;
+
 export interface SceneHandle {
+  /** pointer position over the scene, each -1..1 (0,0 = centre) */
+  setPointer(nx: number, ny: number): void;
+  /** add drag rotation in radians; springs back when released */
+  drag(dAz: number): void;
+  /** 0..1, how far the hero has scrolled away */
+  setScroll(p: number): void;
+  spawn(n: number): void;
+  toggleOffline(): boolean;
+  pick(clientX: number, clientY: number): Pick;
   resize(): void;
   refreshColors(): void;
   setRunning(run: boolean): void;
@@ -134,6 +151,23 @@ export function createScene(container: HTMLElement, opts: SceneOptions): SceneHa
     disposables.push(g, m);
   }
 
+  // ---- floor dots (depth cue) ------------------------------------------------
+  {
+    const pts: number[] = [];
+    for (let x = -12; x <= 12; x += 1) for (let z = -6; z <= 6; z += 1) pts.push(x, -0.02, z);
+    const g = new THREE.BufferGeometry();
+    g.setAttribute("position", new THREE.Float32BufferAttribute(pts, 3));
+    const m = new THREE.PointsMaterial({ color: 0xffffff, size: 2.2, sizeAttenuation: false, transparent: true, opacity: 0.9 });
+    bind(() => m.color.copy(col["--line"]));
+    root.add(new THREE.Points(g, m));
+    disposables.push(g, m);
+  }
+
+  // station groups, so each can rise in during the intro
+  const lane = new THREE.Group();
+  const linkG = new THREE.Group();
+  root.add(lane, linkG);
+
   // ---- phone slab -------------------------------------------------------
   const phone = new THREE.Group();
   phone.position.set(PHONE_X, 0, 0);
@@ -166,9 +200,9 @@ export function createScene(container: HTMLElement, opts: SceneOptions): SceneHa
   // ---- outbox lane (trough) -----------------------------------------------
   const laneLen = LANE_END - LANE_START + 0.7;
   const laneMid = (LANE_END + LANE_START) / 2;
-  solid(box(laneLen, 0.2, 1.1), "--panel-2", [laneMid, 0.1, 0]);
-  solid(box(laneLen, 0.28, 0.08), "--panel-2", [laneMid, 0.3, -0.55]);
-  solid(box(laneLen, 0.28, 0.08), "--panel-2", [laneMid, 0.3, 0.55]);
+  solid(box(laneLen, 0.2, 1.1), "--panel-2", [laneMid, 0.1, 0], "--dim", lane);
+  solid(box(laneLen, 0.28, 0.08), "--panel-2", [laneMid, 0.3, -0.55], "--dim", lane);
+  solid(box(laneLen, 0.28, 0.08), "--panel-2", [laneMid, 0.3, 0.55], "--dim", lane);
   // slot ticks on the lane floor
   const tickMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.5 });
   bind(() => tickMat.color.copy(col["--line"]));
@@ -177,11 +211,11 @@ export function createScene(container: HTMLElement, opts: SceneOptions): SceneHa
     const g = box(0.04, 0.01, 0.8);
     const m = new THREE.Mesh(g, tickMat);
     m.position.set(LANE_END - i * SLOT - SLOT / 2, 0.21, 0);
-    root.add(m);
+    lane.add(m);
     disposables.push(g);
   }
   // hand-off pad between phone and lane
-  solid(box(0.7, 0.12, 0.7), "--panel-2", [(PHONE_X + 1.35 + LANE_START) / 2, 0.06, 0]);
+  solid(box(0.7, 0.12, 0.7), "--panel-2", [(PHONE_X + 1.35 + LANE_START) / 2, 0.06, 0], "--dim", lane);
 
   // ---- link between outbox and server -------------------------------------
   const linkMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
@@ -191,7 +225,7 @@ export function createScene(container: HTMLElement, opts: SceneOptions): SceneHa
   disposables.push(linkMat, linkGeo);
   for (let i = 0; i < LINK_N; i++) {
     const m = new THREE.Mesh(linkGeo, linkMat);
-    root.add(m);
+    linkG.add(m);
     linkSegs.push(m);
   }
   // break marker: two crossed bars
@@ -205,10 +239,15 @@ export function createScene(container: HTMLElement, opts: SceneOptions): SceneHa
     xMark.add(b);
   }
   xMark.position.set((LINK_X0 + LINK_X1) / 2, 0.45, 0);
-  root.add(xMark);
+  linkG.add(xMark);
+  // invisible, generous hit area for tapping the link
+  const linkHit = new THREE.Mesh(box(LINK_X1 - LINK_X0 + 0.8, 1.6, 1.8), new THREE.MeshBasicMaterial({ visible: false }));
+  linkHit.position.set((LINK_X0 + LINK_X1) / 2, 0.6, 0);
+  linkG.add(linkHit);
+  disposables.push(linkHit.geometry, linkHit.material as THREE.Material);
   // link pillar stubs at each end
-  solid(box(0.18, 0.5, 0.18), "--panel-2", [LINK_X0 - 0.05, 0.25, 0]);
-  solid(box(0.18, 0.5, 0.18), "--panel-2", [LINK_X1 + 0.05, 0.25, 0]);
+  solid(box(0.18, 0.5, 0.18), "--panel-2", [LINK_X0 - 0.05, 0.25, 0], "--dim", linkG);
+  solid(box(0.18, 0.5, 0.18), "--panel-2", [LINK_X1 + 0.05, 0.25, 0], "--dim", linkG);
 
   // ---- database cylinder (server) -------------------------------------------
   const db = new THREE.Group();
@@ -250,6 +289,14 @@ export function createScene(container: HTMLElement, opts: SceneOptions): SceneHa
   body.add(new THREE.LineSegments(bodyEdge, rimMat));
   disposables.push(bodyEdge);
   const dbTopY = 0.18 + DB_H + 0.06;
+  const ringGeo = new THREE.TorusGeometry(1.25, 0.035, 6, 48);
+  const ringMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0 });
+  bind(() => ringMat.color.copy(col["--mint"]));
+  const ring = new THREE.Mesh(ringGeo, ringMat);
+  ring.rotation.x = Math.PI / 2;
+  ring.position.y = dbTopY;
+  db.add(ring);
+  disposables.push(ringGeo, ringMat);
 
   // ---- crates (instanced) -----------------------------------------------------
   const crateGeo = box(CRATE, CRATE, CRATE);
@@ -306,10 +353,10 @@ export function createScene(container: HTMLElement, opts: SceneOptions): SceneHa
   let width = 1;
   let height = 1;
 
-  const placeCamera = (drift: number) => {
+  const placeCamera = (drift: number, lift = 0) => {
     const a = phi + drift;
     const dist = 40;
-    const elev = 0.55;
+    const elev = Math.min(1.2, Math.max(0.3, 0.55 + lift));
     camera.position.set(
       target.x - Math.sin(a) * dist * Math.cos(elev),
       target.y + Math.sin(elev) * dist,
@@ -349,9 +396,9 @@ export function createScene(container: HTMLElement, opts: SceneOptions): SceneHa
       fy = 0.5;
     } else {
       const tight = aspect < 1.5;
-      share = tight ? 0.42 : 0.55;
-      fx = tight ? 0.79 : 0.755;
-      fy = 0.52;
+      share = tight ? 0.44 : 0.56;
+      fx = tight ? 0.78 : 0.745;
+      fy = 0.47;
     }
     vw = bw / share;
     vh = vw / aspect;
@@ -361,9 +408,9 @@ export function createScene(container: HTMLElement, opts: SceneOptions): SceneHa
       fx = Math.min(fx, 1 - (bw / vw) / 2 - 0.02);
     }
     if (portrait) {
-      // tuck the scene into the bottom strip, text keeps the top
+      // the scene takes a strip at the top of the hero, text follows below
       const half = bh / vh / 2;
-      fy = Math.max(0.5, 1 - half - 0.035);
+      fy = Math.min(0.5, half + 0.02);
     }
     const cx = (minX + maxX) / 2;
     const cy = (minY + maxY) / 2;
@@ -392,6 +439,13 @@ export function createScene(container: HTMLElement, opts: SceneOptions): SceneHa
   let dbFlash = 0;
   let offlineNow = false;
   let forced: boolean | undefined;
+  let intro = opts.reduced ? 1 : 0;
+  let burst = 0;
+  let burstT = 0;
+  let synced = 0;
+  let phoneFlash = 0;
+  let ptrX = 0, ptrY = 0, camAz = 0, camEl = 0, dragAz = 0, dragHold = 0, scrollP = 0;
+  let lastStats = "";
 
   const allocate = () => pool.find((c) => c.state === "free");
   const slotPos = (i: number, out: THREE.Vector3) => {
@@ -410,8 +464,35 @@ export function createScene(container: HTMLElement, opts: SceneOptions): SceneHa
     return c > 3.6 && c < 9.2;
   };
 
+  const birth = (c: Crate) => {
+    c.state = "born";
+    c.t = 0;
+    c.mint = 0;
+    c.scale = 0;
+    c.pos.set(PHONE_X + (Math.random() - 0.5) * 0.8, 0.34 + CRATE / 2 + 0.02, (Math.random() - 0.5) * 1.2);
+    c.from.copy(c.pos);
+    phoneFlash = 1;
+  };
+
   const step = (dt: number) => {
     time += dt;
+    intro = Math.min(1, intro + dt / 1.7);
+    phoneFlash = Math.max(0, phoneFlash - dt * 3);
+    // camera easing: pointer parallax, drag with spring-back
+    camAz += (ptrX * 0.16 - camAz) * Math.min(1, dt * 3.5);
+    camEl += (-ptrY * 0.1 - camEl) * Math.min(1, dt * 3.5);
+    dragHold -= dt;
+    if (dragHold <= 0) dragAz *= Math.exp(-dt * 1.6);
+    if (intro < 0.75) return;
+    if (burst > 0) {
+      burstT -= dt;
+      if (burstT <= 0) {
+        burstT = 0.09;
+        burst--;
+        const c = allocate();
+        if (c) birth(c);
+      }
+    }
     offlineNow = isOffline();
     const target_ = offlineNow ? 1 : 0;
     broken += (target_ - broken) * Math.min(1, dt * 5);
@@ -423,14 +504,7 @@ export function createScene(container: HTMLElement, opts: SceneOptions): SceneHa
     if (spawnT <= 0) {
       spawnT = (offlineNow ? 0.62 : 0.95) + Math.random() * 0.2;
       const c = pending < MAX_PENDING ? allocate() : undefined;
-      if (c) {
-        c.state = "born";
-        c.t = 0;
-        c.mint = 0;
-        c.scale = 0;
-        c.pos.set(PHONE_X + (Math.random() - 0.5) * 0.8, 0.34 + CRATE / 2 + 0.02, (Math.random() - 0.5) * 1.2);
-        c.from.copy(c.pos);
-      }
+      if (c) birth(c);
     }
 
     // flush head of queue when the link is up
@@ -498,6 +572,7 @@ export function createScene(container: HTMLElement, opts: SceneOptions): SceneHa
             c.state = "free";
             c.scale = 0;
             dbFlash = 1;
+            synced++;
           }
           break;
         }
@@ -515,7 +590,28 @@ export function createScene(container: HTMLElement, opts: SceneOptions): SceneHa
   const colTmp = new THREE.Color();
   const v3 = new THREE.Vector3();
 
+  const back = (t: number) => {
+    const c1 = 1.70158, c3 = c1 + 1, u = t - 1;
+    return 1 + c3 * u * u * u + c1 * u * u;
+  };
+  const stations: THREE.Object3D[] = [phone, lane, linkG, db];
+
   const draw = () => {
+    // intro: stations pop in one after another, phone first
+    stations.forEach((g, i) => {
+      const k = clamp01((intro - i * 0.17) / 0.45);
+      g.scale.setScalar(k <= 0 ? 0.0001 : back(k));
+    });
+    screenMat.color.copy(col["--panel"]).lerp(col["--amber"], phoneFlash * 0.55);
+    ring.scale.setScalar(1 + (1 - dbFlash) * 0.55);
+    ringMat.opacity = dbFlash * 0.9;
+    if (opts.onStats) {
+      const key = `${offlineNow}|${queue.length}|${synced}`;
+      if (key !== lastStats) {
+        lastStats = key;
+        opts.onStats({ offline: offlineNow, queued: queue.length, synced });
+      }
+    }
     // crates
     for (let i = 0; i < POOL; i++) {
       const c = pool[i];
@@ -603,7 +699,12 @@ export function createScene(container: HTMLElement, opts: SceneOptions): SceneHa
     step(dt);
     if (!opts.reduced) {
       const d = Math.sin(time * 0.13) * 0.035;
-      placeCamera(d);
+      placeCamera(d + camAz + dragAz, camEl + scrollP * 0.32);
+      const z = 1 - scrollP * 0.14;
+      if (camera.zoom !== z) {
+        camera.zoom = z;
+        camera.updateProjectionMatrix();
+      }
     }
     renderOnce();
   };
@@ -621,11 +722,49 @@ export function createScene(container: HTMLElement, opts: SceneOptions): SceneHa
     for (let i = 0; i < 260; i++) step(1 / 30);
   }
 
+  const ray = new THREE.Raycaster();
+  const ndc = new THREE.Vector2();
+
   width = Math.max(1, container.clientWidth);
   height = Math.max(1, container.clientHeight);
   resize();
 
   return {
+    setPointer(nx, ny) {
+      ptrX = Math.max(-1, Math.min(1, nx));
+      ptrY = Math.max(-1, Math.min(1, ny));
+    },
+    drag(dAz) {
+      dragAz = Math.max(-0.7, Math.min(0.7, dragAz + dAz));
+      dragHold = 1.2;
+    },
+    setScroll(p) {
+      scrollP = clamp01(p);
+    },
+    spawn(n) {
+      burst = Math.min(12, burst + n);
+      if (opts.reduced) {
+        for (let i = 0; i < 40; i++) step(1 / 30);
+        renderOnce();
+      }
+    },
+    toggleOffline() {
+      forced = !isOffline();
+      if (opts.reduced) {
+        for (let i = 0; i < 200; i++) step(1 / 30);
+        renderOnce();
+      }
+      return forced;
+    },
+    pick(clientX, clientY) {
+      const r = canvas.getBoundingClientRect();
+      ndc.set(((clientX - r.left) / r.width) * 2 - 1, -((clientY - r.top) / r.height) * 2 + 1);
+      ray.setFromCamera(ndc, camera);
+      if (ray.intersectObject(phone, true).length) return "phone";
+      if (ray.intersectObject(linkHit, false).length) return "link";
+      if (ray.intersectObject(db, true).length) return "server";
+      return null;
+    },
     resize,
     refreshColors: applyColors,
     setRunning(run: boolean) {

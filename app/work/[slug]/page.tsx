@@ -56,6 +56,7 @@ export default async function CaseStudy({ params }: Props) {
                 </ul>
               </dd>
             </div>
+{project.links.length > 0 && (
             <div>
               <dt>Links</dt>
               <dd>
@@ -68,6 +69,7 @@ export default async function CaseStudy({ params }: Props) {
                 </ul>
               </dd>
             </div>
+            )}
           </dl>
 
           <div className="prose">

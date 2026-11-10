@@ -16,11 +16,15 @@ export const statusMark: Record<TaskStatus, { mark: string; word: string }> = {
   next: { mark: "[ ]", word: "next" },
 };
 
-const [fico, kofi] = projects;
+const bySlug = (slug: string) => projects.find((p) => p.slug === slug)!;
+const fico = bySlug("fico");
+const kofi = bySlug("kofi");
+const kky = bySlug("kkyubbi");
 const [dee, axcela, dict] = experience;
 
 export const tasks: Task[] = [
   { id: "fico", label: fico.name, meta: `${fico.year}, shipped`, status: "done" },
+  { id: "kkyubbi", label: kky.name, meta: `${kky.year}, in progress`, status: "active" },
   { id: "kofi", label: "Kofi marketplace", meta: `${kofi.year}, shipped`, status: "done" },
   { id: "job-dee", label: dee.org.replace(" Software Corporation", ""), meta: dee.period, status: "active" },
   { id: "job-axcela", label: axcela.org, meta: axcela.period, status: "done" },
@@ -30,7 +34,7 @@ export const tasks: Task[] = [
 
 export const prompt = {
   user: "Show me what Joshua has built and where he has worked.",
-  agent: `${person.name} is a full-stack and backend developer working in fintech, based in ${person.location}. Below are his two flagship projects, his jobs, and what he is doing next.`,
+  agent: `${person.name} is a full-stack and backend developer working in fintech, based in ${person.location}. Below are his three main projects, his jobs, and what he is doing next.`,
 };
 
 export const fico_ = {
@@ -71,6 +75,18 @@ export const fico_ = {
     { src: "/img/fico-mobile-insights.webp", alt: fico.sections[4].figure && typeof fico.sections[4].figure === "object" ? fico.sections[4].figure.alt : "", cap: "Insights" },
   ],
   links: fico.links,
+};
+
+export const kkyubbi_ = {
+  sentence: kky.lead,
+  demo: "Same core, different modules. Pick a business type to see which modules switch on, or take the cube apart.",
+  points: [
+    "Each computer keeps its own SQLite database, so selling does not stop when the internet does.",
+    "Branches sync to one central Postgres database on Supabase.",
+    "Packaged as a Windows desktop app with Electron.",
+  ],
+  stack: kky.stack,
+  status: "in development, first edition is for a medicine distributor",
 };
 
 export const kofi_ = {

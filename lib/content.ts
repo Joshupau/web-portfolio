@@ -132,6 +132,38 @@ export const projects: Project[] = [
     ],
   },
   {
+    slug: "kkyubbi",
+    name: "Kkyubbi",
+    year: "2026",
+    summary: "One business platform, different modules per business type",
+    lead: "A modular business platform: one core for sales, stock and reports, with extra modules switched on for each kind of business. The first edition is for a medicine distributor.",
+    role: "Design and development, solo",
+    stack: ["Next.js", "React", "Electron", "SQLite (better-sqlite3)", "Supabase", "Postgres"],
+    links: [],
+    sections: [
+      {
+        heading: "Why modules",
+        body: [
+          "A pharmacy, a retail store and a resort all sell things, count stock and need reports. What differs is the extras. Kkyubbi keeps one shared core and adds modules per business type, so a new kind of business is a new set of modules and not a new codebase.",
+          "The name comes from a cube: small blocks that fit together into one thing.",
+        ],
+      },
+      {
+        heading: "Local first, synced centrally",
+        body: [
+          "Each computer keeps its own SQLite database through better-sqlite3, so the counter keeps working when the internet drops. Data syncs to a central Postgres database on Supabase.",
+          "It ships as a Windows desktop app built with Electron, with the interface in Next.js and React.",
+        ],
+      },
+      {
+        heading: "Status",
+        body: [
+          "In development. The first edition is for a client that distributes medicines to hospital and clinic sites. Retail and resort editions come after.",
+        ],
+      },
+    ],
+  },
+  {
     slug: "kofi",
     name: "Kofi NFT Marketplace",
     year: "2025",

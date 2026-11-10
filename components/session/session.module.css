@@ -72,6 +72,41 @@
 .del { color: var(--rose); background: var(--panel-2); display: block; text-decoration: line-through; text-decoration-color: var(--dim); }
 .ctx { color: var(--dim); display: block; }
 
+/* ---- tool run animation ---- */
+.running { display: none; color: var(--dim); font-size: 0.8125rem; margin-left: 1ch; }
+.running::after { content: "..."; display: inline-block; overflow: hidden; vertical-align: bottom; width: 0; animation: dots 0.9s steps(4) infinite; }
+@keyframes dots { to { width: 3ch; } }
+.wait .dot, .run .dot { background: transparent; border: 1.5px solid var(--amber); }
+.run .dot { border-top-color: transparent; animation: spin 0.6s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.run .running { display: inline; }
+.wait .result, .run .result { visibility: hidden; }
+.done .dot { animation: pop 0.35s ease-out; }
+@keyframes pop { 0% { transform: scale(0.4); } 60% { transform: scale(1.5); } }
+.done .result::before { animation: bracket 0.25s ease-out both; transform-origin: top left; }
+@keyframes bracket { from { transform: scale(0); } }
+.done .result > * { animation: stream 0.4s ease-out both; }
+.done .result > *:nth-child(2) { animation-delay: 0.1s; }
+.done .result > *:nth-child(3) { animation-delay: 0.2s; }
+.done .result > *:nth-child(n + 4) { animation-delay: 0.3s; }
+.done .lines li { animation: stream 0.35s ease-out both; }
+.done .lines li:nth-child(2) { animation-delay: 0.08s; }
+.done .lines li:nth-child(3) { animation-delay: 0.16s; }
+.done .lines li:nth-child(4) { animation-delay: 0.24s; }
+.done .lines li:nth-child(n + 5) { animation-delay: 0.32s; }
+@keyframes stream { from { opacity: 0; transform: translateX(-10px); } }
+.cursor { display: inline-block; width: 0.6ch; height: 1.05em; margin-left: 3px; vertical-align: text-bottom; background: var(--amber); animation: blink 1s steps(2) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+
+/* rail progress line */
+.rail .tasks { position: relative; }
+.rail .tasks::before, .rail .tasks::after { content: ""; position: absolute; left: -10px; top: 0; bottom: 0; width: 2px; background: var(--line); border-radius: 2px; }
+.rail .tasks::after { background: var(--mint); transform-origin: top; transform: scaleY(var(--p, 0)); }
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor, .running::after { animation: none; }
+}
+
 /* ---- outbox demo ---- */
 .demo { border: 1px solid var(--line); background: var(--panel); border-radius: var(--radius); padding: 0.75rem; margin-bottom: 0.5rem; }
 .demoBar { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.75rem; }
@@ -86,6 +121,14 @@
 .phone { margin: 0; width: 100%; padding: 7px; background: var(--panel-2); border: 2px solid var(--dim); border-radius: 26px; }
 .phone img { display: block; width: 100%; height: auto; border-radius: 19px; }
 .cap { font-size: 0.8125rem; color: var(--dim); }
+@media (min-width: 861px) and (prefers-reduced-motion: no-preference) {
+  .phones { perspective: 900px; padding: 0.5rem 0 0.25rem; }
+  .phone { transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.2s; transform-origin: center; }
+  .phones li:nth-child(1) .phone { transform: rotateY(16deg) rotateX(3deg); }
+  .phones li:nth-child(2) .phone { transform: translateY(-6px); }
+  .phones li:nth-child(3) .phone { transform: rotateY(-16deg) rotateX(3deg); }
+  .phones li:hover .phone { transform: translateY(-10px) scale(1.04); border-color: var(--amber); }
+}
 
 /* ---- browser frame ---- */
 .browser { margin: 0 0 0.75rem; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--panel); max-width: 40rem; }
