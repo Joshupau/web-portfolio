@@ -6,6 +6,7 @@ import { openCase } from "@/components/CaseReader";
 import LoanDemo from "@/components/demo/LoanDemo";
 import MiniScene from "@/components/scene/MiniScene";
 import OutboxDemo from "./OutboxDemo";
+import PhoneShowcase from "./PhoneShowcase";
 import { education, person } from "@/lib/content";
 import { fico_, jobs, kofi_, kkyubbi_, nowNext, prompt, statusMark, tasks, type TaskStatus } from "@/lib/session";
 import s from "./session.module.css";
@@ -203,17 +204,8 @@ export default function Session() {
           </Tool>
 
           <Tool name="Read" args={<Path>screenshots/</Path>}>
-            <p className={s.note}>Three screens of the Android app: dashboard, activity, insights.</p>
-            <ul className={s.phones}>
-              {fico_.shots.map((p) => (
-                <li key={p.src}>
-                  <figure className={s.phone}>
-                    <Image src={p.src} alt={p.alt} width={376} height={831} sizes="(max-width: 700px) 60vw, 200px" />
-                  </figure>
-                  <span className={s.cap}>{p.cap}</span>
-                </li>
-              ))}
-            </ul>
+            <p className={s.note}>Three screens of the Android app. Move over the phone to turn it, and tap the numbers.</p>
+            <PhoneShowcase shots={fico_.shots} />
           </Tool>
 
           <Tool name="Read" args={<Path>stack, links</Path>}>

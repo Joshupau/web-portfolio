@@ -70,10 +70,41 @@ export const fico_ = {
     "A separate read-only MCP server lets an AI assistant read his finances: spending by category, upcoming bills, goals, runway, safe-to-spend.",
   ],
   shots: [
-    { src: "/img/fico-mobile-dashboard.webp", alt: fico.sections[0].figure && typeof fico.sections[0].figure === "object" ? fico.sections[0].figure.alt : "", cap: "Dashboard" },
-    { src: "/img/fico-mobile-activity.webp", alt: fico.sections[3].figure && typeof fico.sections[3].figure === "object" ? fico.sections[3].figure.alt : "", cap: "Activity" },
-    { src: "/img/fico-mobile-insights.webp", alt: fico.sections[4].figure && typeof fico.sections[4].figure === "object" ? fico.sections[4].figure.alt : "", cap: "Insights" },
+    {
+      src: "/img/fico-mobile-dashboard.webp",
+      alt: "The Fico dashboard with total balance, safe-to-spend and bills due",
+      cap: "Dashboard",
+      notes: [
+        { x: 36, y: 20, title: "A one-line insight", text: "Written by an AI model from the month's numbers, in plain words." },
+        { x: 33, y: 36, title: "Balance across every wallet", text: "Read from the database on the phone, so it shows with no signal." },
+        { x: 20, y: 73, title: "Safe to spend", text: "What is left for today after bills and the rest of the month are set aside." },
+        { x: 30, y: 87, title: "Bills before month end", text: "Overdue ones are flagged, and they already count against safe to spend." },
+      ],
+    },
+    {
+      src: "/img/fico-mobile-activity.webp",
+      alt: "The Fico activity list grouped by day with filters",
+      cap: "Activity",
+      notes: [
+        { x: 50, y: 21, title: "Filters", text: "Narrow the list by wallet, category or date." },
+        { x: 87, y: 28, title: "A total for each day", text: "Every day is grouped, with what went out that day." },
+        { x: 84, y: 35, title: "Which wallet paid", text: "Each record shows the wallet it came from, like GCash or a bank." },
+        { x: 50, y: 93, title: "Add from anywhere", text: "Opens quick-add, where “80 lunch cash” becomes a record." },
+      ],
+    },
+    {
+      src: "/img/fico-mobile-insights.webp",
+      alt: "The Fico insights page with a category mix chart and period summary",
+      cap: "Insights",
+      notes: [
+        { x: 38, y: 20, title: "One place for the numbers", text: "Spending, budgets, money, bills and goals as tabs." },
+        { x: 50, y: 32, title: "Pick the period", text: "Today, week, month, year or all time." },
+        { x: 50, y: 49, title: "The month in four figures", text: "Spent, came in, top category and number of transactions." },
+        { x: 50, y: 83, title: "Category mix", text: "Where the money went. The AI assistant reads this same data." },
+      ],
+    },
   ],
+
   links: fico.links,
 };
 
