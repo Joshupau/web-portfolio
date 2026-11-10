@@ -41,9 +41,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
               © {new Date().getFullYear()} {person.name}
             </span>
             <nav aria-label="Elsewhere" className="site-footer__links">
-              <a href={person.github}>GitHub</a>
-              <a href={person.linkedin}>LinkedIn</a>
-              <a href={person.resume}>Résumé</a>
+              <a href={person.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+              <a href={person.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+              <a href={person.resume} target="_blank" rel="noopener noreferrer">Résumé</a>
             </nav>
           </div>
         </footer>

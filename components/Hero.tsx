@@ -36,11 +36,24 @@ export default function Hero() {
     };
   }, []);
 
+  // the command prompt at the bottom of the page can drive the scene too
+  useEffect(() => {
+    const toggle = () => handle.current?.toggleOffline();
+    const spawn = () => handle.current?.spawn(3);
+    window.addEventListener("scene:toggle", toggle);
+    window.addEventListener("scene:spawn", spawn);
+    return () => {
+      window.removeEventListener("scene:toggle", toggle);
+      window.removeEventListener("scene:spawn", spawn);
+    };
+  }, []);
+
   const inText = (t: EventTarget | null) => !!(t as HTMLElement | null)?.closest?.(".hero__text");
 
   return (
     <section
       ref={section}
+      id="top"
       className="hero"
       aria-labelledby="hero-title"
       onPointerMove={(e) => {
@@ -106,7 +119,7 @@ export default function Hero() {
             <a href="#work" className="btn btn--primary">
               View work
             </a>
-            <a href={person.resume} className="btn">
+            <a href={person.resume} className="btn" target="_blank" rel="noopener noreferrer">
               Résumé
             </a>
           </div>

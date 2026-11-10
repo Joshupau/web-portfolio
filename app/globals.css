@@ -395,3 +395,66 @@ a:hover { color: var(--text); }
 .diagram__line { stroke: var(--amber); stroke-width: 1.5; fill: none; color: var(--amber); }
 .figure:has(.diagram) { overflow-x: auto; }
 @media (max-width: 600px) { .diagram { min-width: 560px; } }
+
+/* Command prompt (fixed at the bottom) -------------------------------- */
+body { padding-bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px)); }
+.composer {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
+  padding: 0.5rem var(--gutter) calc(0.6rem + env(safe-area-inset-bottom, 0px));
+  background: linear-gradient(180deg, transparent, var(--bg) 45%);
+  pointer-events: none;
+}
+.composer__inner { max-width: 44rem; margin: 0 auto; pointer-events: auto; }
+.composer__form {
+  display: flex; align-items: center; gap: 0.5rem;
+  min-height: 52px; padding: 0 0.4rem 0 0.9rem;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
+  font-family: var(--font-mono);
+  box-shadow: 0 6px 24px color-mix(in srgb, var(--bg) 70%, transparent);
+  transition: border-color 0.15s;
+}
+.composer.is-open .composer__form { border-color: var(--amber); }
+.composer__caret { color: var(--amber); font-weight: 500; }
+.composer__sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.composer__form input {
+  flex: 1; min-width: 0; height: 50px; background: none; border: 0; outline: 0;
+  color: var(--text); font: 400 1rem var(--font-mono);
+}
+.composer__form input::placeholder { color: var(--dim); }
+.composer__key { padding: 0.1rem 0.45rem; border: 1px solid var(--line); border-radius: 4px; color: var(--dim); font: 500 0.75rem var(--font-mono); }
+.composer.is-open .composer__key { display: none; }
+@media (hover: none) { .composer__key { display: none; } }
+.composer__send {
+  min-height: 40px; padding: 0 0.9rem; border-radius: 8px; cursor: pointer;
+  background: var(--amber); color: var(--bg); border: 1px solid var(--amber); font: 500 0.8125rem var(--font-mono);
+}
+.composer__chips { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0 0 0.5rem; padding: 0.6rem; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; animation: composer-up 0.18s ease-out; }
+.composer__chips .chip { min-height: 40px; }
+.composer__reply {
+  margin: 0 0 0.5rem; padding: 0.6rem 0.9rem; background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--mint); border-radius: 8px;
+  font: 400 0.875rem/1.5 var(--font-mono); color: var(--text); animation: composer-up 0.2s ease-out;
+}
+.composer__reply > span { color: var(--mint); }
+.composer__reply.is-bad { border-left-color: var(--rose); }
+.composer__reply.is-bad > span { color: var(--rose); }
+@keyframes composer-up { from { opacity: 0; transform: translateY(8px); } }
+@media (prefers-reduced-motion: reduce) { .composer__chips, .composer__reply { animation: none; } }
+
+/* Write-up reader (side sheet) ---------------------------------------- */
+.reader { position: fixed; inset: 0; width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: transparent; color: var(--text); overflow: hidden; }
+.reader::backdrop { background: color-mix(in srgb, var(--bg) 75%, transparent); }
+.reader__sheet { position: absolute; top: 0; right: 0; bottom: 0; width: min(46rem, 100%); display: flex; flex-direction: column; background: var(--bg); border-left: 1px solid var(--line); }
+.reader[open] .reader__sheet { animation: reader-in 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); }
+@keyframes reader-in { from { transform: translateX(40px); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .reader[open] .reader__sheet { animation: none; } }
+.reader__bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.5rem var(--gutter); border-bottom: 1px solid var(--line); font: 400 0.8125rem var(--font-mono); color: var(--dim); }
+.reader__path { min-width: 0; overflow-wrap: anywhere; }
+.reader__tool { color: var(--amber); }
+.reader__body { flex: 1; overflow-y: auto; overscroll-behavior: contain; padding: 1.5rem var(--gutter) 3rem; }
+.reader__body > h2 { font-family: var(--font-display); font-stretch: 125%; font-weight: 800; font-size: clamp(1.9rem, 5vw, 2.75rem); line-height: 1.05; }
+.reader__lead { margin-top: 0.75rem; font-size: 1.125rem; line-height: 1.55; max-width: 60ch; }
+.reader__facts { margin: 1.25rem 0 2rem; padding: 0.9rem 1rem; display: grid; gap: 0.5rem; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); font-size: 0.9375rem; }
+.reader__facts div { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); gap: 0.75rem; }
+.reader__facts dt { font-family: var(--font-mono); font-size: 0.8125rem; color: var(--amber); padding-top: 0.1rem; }
+.reader__links { display: flex; flex-wrap: wrap; gap: 0.25rem 1.5rem; margin-top: 2rem; font-family: var(--font-mono); font-size: 0.9375rem; }
+.reader__links a { display: inline-flex; align-items: center; min-height: 44px; }

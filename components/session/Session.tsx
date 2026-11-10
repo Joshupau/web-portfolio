@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { openCase } from "@/components/CaseReader";
+import LoanDemo from "@/components/demo/LoanDemo";
 import MiniScene from "@/components/scene/MiniScene";
 import OutboxDemo from "./OutboxDemo";
 import { education, person } from "@/lib/content";
@@ -219,10 +221,15 @@ export default function Session() {
               {fico_.also.map((a) => <li key={a}>{a}</li>)}
               <li><span className={s.dim}>stack </span>{fico_.stack.join(", ")}</li>
               {fico_.links.map((l) => (
-                <li key={l.href}><span className={s.dim}>{l.label.toLowerCase()} </span><a href={l.href}>{l.href.replace("https://", "")}</a></li>
+                <li key={l.href}><span className={s.dim}>{l.label.toLowerCase()} </span><a href={l.href} target="_blank" rel="noopener noreferrer">{l.href.replace("https://", "")}</a></li>
               ))}
             </ul>
           </Tool>
+          <p className={s.more}>
+            <button type="button" className={s.moreBtn} onClick={() => openCase("fico")}>
+              Read the full write-up
+            </button>
+          </p>
         </section>
 
         <section id="kkyubbi" className={s.turn} aria-labelledby="h-kky">
@@ -241,6 +248,11 @@ export default function Session() {
               <li><span className={s.dim}>status </span>{kkyubbi_.status}</li>
             </ul>
           </Tool>
+          <p className={s.more}>
+            <button type="button" className={s.moreBtn} onClick={() => openCase("kkyubbi")}>
+              Read the full write-up
+            </button>
+          </p>
         </section>
 
         <section id="kofi" className={s.turn} aria-labelledby="h-kofi">
@@ -259,10 +271,15 @@ export default function Session() {
               <li>{kofi_.how}</li>
               <li><span className={s.dim}>stack </span>{kofi_.stack.join(", ")}</li>
               {kofi_.links.map((l) => (
-                <li key={l.href}><span className={s.dim}>{l.label.toLowerCase()} </span><a href={l.href}>{l.href.replace("https://", "")}</a></li>
+                <li key={l.href}><span className={s.dim}>{l.label.toLowerCase()} </span><a href={l.href} target="_blank" rel="noopener noreferrer">{l.href.replace("https://", "")}</a></li>
               ))}
             </ul>
           </Tool>
+          <p className={s.more}>
+            <button type="button" className={s.moreBtn} onClick={() => openCase("kofi")}>
+              Read the full write-up
+            </button>
+          </p>
         </section>
 
         <section id="experience" className={s.turn} aria-labelledby="h-exp">
@@ -274,11 +291,21 @@ export default function Session() {
                 {job.role}, {job.org} <Badge status={status} />
               </h3>
               <p className={s.note}>{sentence} <span className={s.dim}>{job.period}.</span></p>
-              <Tool name="Read" args={<Path>{job.org.toLowerCase().replace(/[^a-z]+/g, "-")}</Path>} open={status === "active"}>
+              <Tool name="Read" args={<Path>{job.org.toLowerCase().replace(/[^a-z]+/g, "-")}</Path>} open={status === "active" || id === "job-axcela"}>
                 <ul className={s.lines}>
                   {job.points.map((p) => <li key={p}>{p}</li>)}
                 </ul>
               </Tool>
+              {id === "job-axcela" && (
+                <div id="loan-demo" className={s.anchor}>
+                  <Tool name="Run" args="loan schedule demo">
+                    <p className={s.note}>
+                      Loan schedules were the hardest and best part of that job. This is a fresh, small version of the standard math, written for this page. It is not the company&apos;s code.
+                    </p>
+                    <LoanDemo />
+                  </Tool>
+                </div>
+              )}
             </div>
           ))}
           <Tool name="Read" args={<Path>education</Path>} open={false}>
@@ -304,9 +331,9 @@ export default function Session() {
           </Tool>
           <Say>{nowNext.open}</Say>
           <p className={s.links}>
-            <a href={person.github}>GitHub</a>
-            <a href={person.linkedin}>LinkedIn</a>
-            <a href={person.resume}>Resume (PDF)</a>
+            <a href={person.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a href={person.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href={person.resume} target="_blank" rel="noopener noreferrer">Resume (PDF)</a>
           </p>
         </section>
       </div>

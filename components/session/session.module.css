@@ -107,6 +107,12 @@
   .cursor, .running::after { animation: none; }
 }
 
+.more { margin: 0.25rem 0 0; }
+.moreBtn { min-height: 44px; padding: 0 1rem; font: 500 0.875rem var(--font-mono); color: var(--bg); background: var(--amber); border: 1px solid var(--amber); border-radius: var(--radius); cursor: pointer; transition: transform 0.12s; }
+.moreBtn:hover { background: var(--text); border-color: var(--text); }
+.moreBtn:active { transform: translateY(1px) scale(0.98); }
+.anchor { scroll-margin-top: calc(var(--top) + 3.5rem); }
+
 /* ---- outbox demo ---- */
 .demo { border: 1px solid var(--line); background: var(--panel); border-radius: var(--radius); padding: 0.75rem; margin-bottom: 0.5rem; }
 .demoBar { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.75rem; }

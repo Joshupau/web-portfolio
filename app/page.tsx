@@ -1,3 +1,5 @@
+import CaseReader from "@/components/CaseReader";
+import Composer from "@/components/Composer";
 import ContactForm from "@/components/ContactForm";
 import Hero from "@/components/Hero";
 import Session from "@/components/session/Session";
@@ -21,19 +23,22 @@ export default function Home() {
             <ul className="contact__aside">
               <li>{person.location}</li>
               <li>
-                <a href={person.github}>GitHub</a>
+                <a href={person.github} target="_blank" rel="noopener noreferrer">GitHub</a>
               </li>
               <li>
-                <a href={person.linkedin}>LinkedIn</a>
+                <a href={person.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
               </li>
               <li>
-                <a href={person.resume}>Résumé (PDF)</a>
+                <a href={person.resume} target="_blank" rel="noopener noreferrer">Résumé (PDF)</a>
               </li>
             </ul>
             <ContactForm />
           </div>
         </div>
       </section>
+
+      <CaseReader />
+      <Composer />
     </>
   );
 }
