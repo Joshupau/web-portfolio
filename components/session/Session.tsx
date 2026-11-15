@@ -8,7 +8,7 @@ import MiniScene from "@/components/scene/MiniScene";
 import OutboxDemo from "./OutboxDemo";
 import PhoneShowcase from "./PhoneShowcase";
 import { education, person } from "@/lib/content";
-import { fico_, jobs, kofi_, kkyubbi_, nowNext, prompt, statusMark, tasks, type TaskStatus } from "@/lib/session";
+import { fico_, jobs, kofi_, kkyubbi_, ledgerlens_, nowNext, prompt, statusMark, tasks, type TaskStatus } from "@/lib/session";
 import s from "./session.module.css";
 
 type Phase = "static" | "wait" | "run" | "done";
@@ -219,6 +219,38 @@ export default function Session() {
           </Tool>
           <p className={s.more}>
             <button type="button" className={s.moreBtn} onClick={() => openCase("fico")}>
+              Read the full write-up
+            </button>
+          </p>
+        </section>
+
+        <section id="ledgerlens" className={s.turn} aria-labelledby="h-ll">
+          <h2 id="h-ll" className={s.title}>LedgerLens <Badge status="active" /></h2>
+          <Say>{ledgerlens_.sentence}</Say>
+
+          <Tool name="Bash" args={<>{ledgerlens_.check.command.split('"')[0]}<span className={s.str}>&quot;{ledgerlens_.check.command.split('"')[1]}&quot;</span></>}>
+            <p className={s.note}>{ledgerlens_.check.note}</p>
+            <pre className={s.pre}>{ledgerlens_.check.out.join("\n")}</pre>
+          </Tool>
+
+          <Tool name="Bash" args={ledgerlens_.evals.command}>
+            <p className={s.note}>{ledgerlens_.evals.note}</p>
+            <ul className={s.lines}>
+              {ledgerlens_.evals.lines.map(([k, v]) => (
+                <li key={k}><span className={s.dim}>{k} </span>{v}</li>
+              ))}
+            </ul>
+          </Tool>
+
+          <Tool name="Run" args="statement demo">
+            <p className={s.note}>{ledgerlens_.demo.note}</p>
+            <ul className={s.lines}>
+              <li><span className={s.dim}>demo </span><a href={ledgerlens_.demo.href}>{ledgerlens_.demo.label}</a></li>
+              <li><span className={s.dim}>stack </span>{ledgerlens_.stack.join(", ")}</li>
+            </ul>
+          </Tool>
+          <p className={s.more}>
+            <button type="button" className={s.moreBtn} onClick={() => openCase("ledgerlens")}>
               Read the full write-up
             </button>
           </p>

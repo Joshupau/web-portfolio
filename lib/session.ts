@@ -18,12 +18,14 @@ export const statusMark: Record<TaskStatus, { mark: string; word: string }> = {
 
 const bySlug = (slug: string) => projects.find((p) => p.slug === slug)!;
 const fico = bySlug("fico");
+const ll = bySlug("ledgerlens");
 const kofi = bySlug("kofi");
 const kky = bySlug("kkyubbi");
 const [dee, axcela, dict] = experience;
 
 export const tasks: Task[] = [
   { id: "fico", label: fico.name, meta: `${fico.year}, shipped`, status: "done" },
+  { id: "ledgerlens", label: ll.name, meta: `${ll.year}, in Fico`, status: "active" },
   { id: "kkyubbi", label: kky.name, meta: `${kky.year}, in progress`, status: "active" },
   { id: "kofi", label: "Kofi marketplace", meta: `${kofi.year}, shipped`, status: "done" },
   { id: "job-dee", label: dee.org.replace(" Software Corporation", ""), meta: dee.period, status: "active" },
@@ -34,7 +36,7 @@ export const tasks: Task[] = [
 
 export const prompt = {
   user: "Show me what Joshua has built and where he has worked.",
-  agent: `${person.name} is a full-stack and backend developer working in fintech, based in ${person.location}. Below are his three main projects, his jobs, and what he is doing next.`,
+  agent: `${person.name} is a full-stack and backend developer working in fintech, based in ${person.location}. Below are his four main projects, his jobs, and what he is doing next.`,
 };
 
 export const fico_ = {
@@ -108,6 +110,37 @@ export const fico_ = {
   links: fico.links,
 };
 
+export const ledgerlens_ = {
+  sentence: ll.lead,
+  check: {
+    command: 'check "2-dropped-row.csv"',
+    out: [
+      "status    does not add up",
+      "short by  ₱5,729.29",
+      "missing   a debit of ₱5,729.29",
+      "where     before line 3",
+      "fix       needs your approval",
+    ],
+    note: "Every amount is whole centavos. Each row must move the running balance by exactly its amount, so a break is pinned to a line.",
+  },
+  evals: {
+    command: "npm run eval",
+    note: "Measured on invented statements and 120 held-out messages, not estimated.",
+    lines: [
+      ["statement check", "every injected mistake found with a balance column, 0 false alarms"],
+      ["quick-add, rules", "83.3% of messages fully right, 50% with typos"],
+      ["quick-add, rules + model", "92.5%, 88.9% with typos"],
+      ["model cost", "190 KB, 1.1 ms a message on a slowed CPU"],
+    ] as [string, string][],
+  },
+  demo: {
+    href: "/ledgerlens/",
+    label: "Open the demo",
+    note: "Break an invented statement six ways, watch the check catch each one, then approve the fix. It runs in your browser.",
+  },
+  stack: ll.stack,
+};
+
 export const kkyubbi_ = {
   sentence: kky.lead,
   demo: "Same core, different modules. Pick a business type to see which modules switch on, or take the cube apart.",
@@ -140,6 +173,7 @@ export const nowNext = {
   now: [
     "Plans and builds features with AI assistants, then checks the result with tests he writes and runs himself.",
     "Built a read-only MCP server so an AI assistant can answer questions from his real finance data.",
+    "Trained a small model from scratch for Fico's quick-add and measured it against the rules it backs up, on a test set kept apart from training.",
   ],
   next: [
     "Building LLM features properly: prompts, structured output, evaluation and cost control.",

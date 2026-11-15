@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LedgerLens</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Break an invented bank statement and watch LedgerLens catch it with arithmetic, then approve the fix.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="styles.css">
+
+</head>
+<body>
+<main class="page">
+  <header class="intro">
+    <h1>LedgerLens</h1>
+    <p class="lede">Import a bank or e-wallet statement and LedgerLens proves, with arithmetic, whether it adds up. When it doesn't, it shows you the line and proposes a fix. Nothing changes until you approve it.</p>
+    <p class="muted small">By Joshua De Guzman, built to plug into Fico, a finance tracker. <a href="/work/ledgerlens/">Read how it works</a> or <a href="/">see more of my work</a>. Every statement and message here is invented and processed in your browser.</p>
+  </header>
+
+  <section id="bench" class="bench" aria-labelledby="bench-title">
+    <div class="bench-head">
+      <h2 id="bench-title">Break a statement</h2>
+      <p class="muted">This invented GCash-style statement balances. Break it the way a careless export or a tired thumb would, then see what the check says.</p>
+      <div class="controls" id="breaks" role="group" aria-label="Ways to break the statement">
+        <span class="label">Break it:</span>
+      </div>
+      <div class="controls">
+        <label class="switch" for="hide-balance"><input type="checkbox" id="hide-balance"> Hide the balance column</label>
+        <span class="spacer"></span>
+        <button type="button" class="btn" id="undo" disabled>Undo last change</button>
+        <button type="button" class="btn btn-quiet" id="fresh">Load a new statement</button>
+      </div>
+    </div>
+
+    <div class="bench-grid">
+      <div class="ledger">
+        <div class="ledger-meta" id="ledger-meta"></div>
+        <div class="table-wrap">
+          <table>
+            <caption class="visually-hidden">Statement rows as imported</caption>
+            <thead>
+              <tr>
+                <th class="line" scope="col">CSV line</th>
+                <th class="date" scope="col">Date</th>
+                <th scope="col">Description</th>
+                <th class="amt" scope="col">Amount</th>
+                <th class="amt" scope="col">Balance</th>
+              </tr>
+            </thead>
+            <tbody id="ledger-rows"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <aside class="check" aria-labelledby="check-title">
+        <h2 id="check-title" class="visually-hidden">The check</h2>
+        <div class="verdict">
+          <div class="verdict-status" id="status">
+            <span class="status-ok" data-mode="ok"></span>
+            <span class="status-off" data-mode="off" aria-hidden="true"></span>
+            <span class="status-quiet" data-mode="quiet" aria-hidden="true"></span>
+          </div>
+          <div class="delta is-ok" id="delta"><span class="prefix">Difference</span><span id="delta-value" role="img"></span></div>
+          <p class="verdict-note" id="verdict-note"></p>
+        </div>
+        <ol class="findings" id="findings" aria-label="Things to look at"></ol>
+        <p class="visually-hidden" aria-live="polite" id="live"></p>
+      </aside>
+    </div>
+  </section>
+
+  <section id="quickadd" class="section" aria-labelledby="qa-title">
+    <header>
+      <h2 id="qa-title">Type it like a text message</h2>
+      <p class="muted">Fico's quick-add reads messages like "grab 305 gcash". Its hand-written rules miss typos and glued numbers, so a small model trained from scratch fills the gaps. This is the model alone, running on this device.</p>
+    </header>
+    <div class="qa-input">
+      <label for="qa-text">Message</label>
+      <input id="qa-text" type="text" value="grab 305 gcas" autocomplete="off" spellcheck="false" aria-describedby="qa-state">
+      <p class="qa-state" id="qa-state" aria-live="polite"></p>
+      <div class="examples" id="qa-examples" role="group" aria-label="Example messages"></div>
+    </div>
+    <div class="qa-out">
+      <div>
+        <h3 class="small muted">What the model reads</h3>
+        <div class="tokens" id="qa-tokens" aria-label="Words and what the model labelled them"></div>
+      </div>
+      <div>
+        <h3 class="small muted">What it turns into</h3>
+        <dl class="fields" id="qa-fields"></dl>
+        <ul class="evidence" id="qa-evidence" aria-label="Why"></ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="results-title">
+    <header>
+      <h2 id="results-title">How well it works</h2>
+      <p class="muted">Measured, not estimated. Each number comes from a script in the repository and can be rerun.</p>
+    </header>
+    <div class="results">
+      <div class="result">
+        <h3>The check, with a balance column</h3>
+        <div class="table-wrap">
+          <table class="num">
+            <thead><tr><th scope="col">Mistake</th><th class="amt" scope="col">Found</th><th class="amt" scope="col">Right fix first</th></tr></thead>
+            <tbody>
+              <tr><td>None (false alarms)</td><td class="amt">0%</td><td class="amt">n/a</td></tr>
+              <tr><td>Dropped row</td><td class="amt">100%</td><td class="amt">99.9%</td></tr>
+              <tr><td>Repeated row</td><td class="amt">100%</td><td class="amt">100%</td></tr>
+              <tr><td>Flipped debit/credit</td><td class="amt">100%</td><td class="amt">100%</td></tr>
+              <tr><td>Swapped digits</td><td class="amt">100%</td><td class="amt">100%</td></tr>
+              <tr><td>Shifted decimal</td><td class="amt">100%</td><td class="amt">100%</td></tr>
+              <tr><td>One wrong digit</td><td class="amt">100%</td><td class="amt">0%, offered second</td></tr>
+              <tr><td>Two errors that cancel</td><td class="amt">100%</td><td class="amt">0%, offered second</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="caption">2,000 invented statements per mistake, one mistake each. "One wrong digit" and "a missing row" produce identical numbers, so both are offered and you choose. <code>npm run eval -- 2000</code></p>
+      </div>
+
+      <div class="result">
+        <h3>The check, totals only</h3>
+        <div class="table-wrap">
+          <table class="num">
+            <thead><tr><th scope="col">Mistake</th><th class="amt" scope="col">Found</th><th class="amt" scope="col">Right fix in top 3</th></tr></thead>
+            <tbody>
+              <tr><td>None (false alarms)</td><td class="amt">0%</td><td class="amt">n/a</td></tr>
+              <tr><td>Dropped row</td><td class="amt">100%</td><td class="amt">99.5%</td></tr>
+              <tr><td>Repeated row</td><td class="amt">100%</td><td class="amt">100%</td></tr>
+              <tr><td>Flipped debit/credit</td><td class="amt">100%</td><td class="amt">100%</td></tr>
+              <tr><td>Swapped digits</td><td class="amt">100%</td><td class="amt">95.1%</td></tr>
+              <tr><td>Shifted decimal</td><td class="amt">100%</td><td class="amt">99.7%</td></tr>
+              <tr><td>Two errors that cancel</td><td class="amt">0%</td><td class="amt">0%</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="caption">Without a balance column only the total can be checked, so errors that cancel out are invisible. The check says so instead of calling the statement verified.</p>
+      </div>
+
+      <div class="result">
+        <h3>Quick-add, on 120 held-out messages</h3>
+        <div class="table-wrap">
+          <table class="num">
+            <thead><tr><th scope="col">Parser</th><th class="amt" scope="col">All fields right</th><th class="amt" scope="col">Typos and glued numbers</th><th class="amt" scope="col">Taglish</th></tr></thead>
+            <tbody>
+              <tr><td>Fico's rules</td><td class="amt">83.3%</td><td class="amt">50.0%</td><td class="amt">91.3%</td></tr>
+              <tr><td>Model alone</td><td class="amt">79.2%</td><td class="amt">n/a</td><td class="amt">n/a</td></tr>
+              <tr class="best"><td>Rules, then model</td><td class="amt">92.5%</td><td class="amt">88.9%</td><td class="amt">100%</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="caption">Messages written by hand and never used for training. The combining logic was written while looking at this set's misses, so treat the gain as about 7 points until a fresh, reviewed set confirms it.</p>
+      </div>
+
+      <div class="result">
+        <h3>Cost on a slow device</h3>
+        <div class="table-wrap">
+          <table class="num">
+            <thead><tr><th scope="col">CPU slowed</th><th class="amt" scope="col">Model load</th><th class="amt" scope="col">Typical parse</th><th class="amt" scope="col">Slow parse (P95)</th></tr></thead>
+            <tbody>
+              <tr><td>4x</td><td class="amt">254 ms</td><td class="amt">0.6 ms</td><td class="amt">2.4 ms</td></tr>
+              <tr><td>6x</td><td class="amt">301 ms</td><td class="amt">1.1 ms</td><td class="amt">3.4 ms</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="caption">Headless Chromium with the CPU throttled, standing in for a mid-range phone. Model: 1.3 MB of JSON, about 190 KB compressed. No server and no API calls.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="how-title">
+    <header><h2 id="how-title">How it works</h2></header>
+    <ol class="steps">
+      <li><b>Read the statement.</b> The CSV is parsed into whole centavos, never floating-point pesos, so ₱0.10 + ₱0.20 is exactly ₱0.30. Rows it can't read are listed, not dropped.</li>
+      <li><b>Check the arithmetic.</b> With a running balance, every row must move the balance by exactly its amount, so each break is pinned to a line. With only opening and closing balances, one gap is found and its likely causes are ranked.</li>
+      <li><b>You decide.</b> Each finding comes with a proposed fix. Nothing is applied until a person approves it, and every approved fix is recorded with who approved it and when.</li>
+    </ol>
+    <h3>What it can't do yet</h3>
+    <ul class="limits">
+      <li>Read PDF statements. Only CSV for now.</li>
+      <li>Tell a wrong digit from a missing row when both fit the numbers. It offers both and asks.</li>
+      <li>See errors that cancel out when the statement has no balance column.</li>
+      <li>Claim real-world accuracy. The benchmarks use invented statements and 120 hand-written messages.</li>
+    </ul>
+  </section>
+
+  <footer class="foot">
+    <p>LedgerLens is built in TypeScript with no runtime dependencies. The model is an averaged perceptron trained from scratch on synthetic Taglish messages in about ten seconds.</p>
+    <p>AI proposes, arithmetic verifies, a person approves.</p>
+  </footer>
+</main>
+
+<script type="module" src="js/demo/src/main.js"></script>
+
+</body>
+</html>
