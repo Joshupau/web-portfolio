@@ -282,11 +282,9 @@ export const experience = [
     role: "Junior Backend Developer",
     period: "Nov 2024 to May 2026",
     points: [
-      "Worked on the backend team for two finance products: a real-estate installment-sales platform and a microfinance lending and accounting system.",
-      "Built amortization schedules and a buyer ledger with a client portal, where buyers see their balance and pay in-app, and the owner reviews each payment before it posts.",
-      "Built double-entry accounting with automated interest calculations and loan release workflows.",
-      "Wrote REST APIs and background workers in Node.js and TypeScript for high-concurrency work, and integrated PayPal payments.",
-      "Also shipped Socket.io real-time features, Electron desktop builds and Android APKs.",
+      "KFI: double-entry bookkeeping for a microfinance lender, with chart of accounts, journal and expense vouchers, general ledger, trial balance and financial statements, plus loan products, releases, schedules and automated interest.",
+      "Prime Amethyst: real-estate amortization, with schedules from price, downpayment, interest and term, a buyer ledger and client portal, and in-app payments the owner reviews before they post.",
+      "REST APIs and background workers in Node.js and TypeScript, offline sync for Electron desktop and Android builds, and PayPal payments.",
     ],
   },
   {

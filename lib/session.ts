@@ -164,7 +164,7 @@ export const kofi_ = {
 
 export const jobs = [
   { id: "job-dee", status: "active" as TaskStatus, sentence: "Current job: keeps a live point-of-sale system, and the sales it records, working and growing.", job: dee },
-  { id: "job-axcela", status: "done" as TaskStatus, sentence: "Backend work on an installment-sales platform and a microfinance accounting system.", job: axcela },
+  { id: "job-axcela", status: "done" as TaskStatus, sentence: "Double-entry bookkeeping (KFI) and real-estate amortization (Prime Amethyst).", job: axcela },
   { id: "job-dict", status: "done" as TaskStatus, sentence: "First dev job: a small attendance system, as an intern.", job: dict },
 ];
 
