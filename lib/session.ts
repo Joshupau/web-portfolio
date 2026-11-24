@@ -163,8 +163,8 @@ export const kofi_ = {
 };
 
 export const jobs = [
-  { id: "job-dee", status: "active" as TaskStatus, sentence: "Current job: keeps a live point-of-sale system working and growing.", job: dee },
-  { id: "job-axcela", status: "done" as TaskStatus, sentence: "Backend work on loan and accounting software.", job: axcela },
+  { id: "job-dee", status: "active" as TaskStatus, sentence: "Current job: keeps a live point-of-sale system, and the sales it records, working and growing.", job: dee },
+  { id: "job-axcela", status: "done" as TaskStatus, sentence: "Backend work on an installment-sales platform and a microfinance accounting system.", job: axcela },
   { id: "job-dict", status: "done" as TaskStatus, sentence: "First dev job: a small attendance system, as an intern.", job: dict },
 ];
 
@@ -176,8 +176,9 @@ export const nowNext = {
     "Trained a small model from scratch for Fico's quick-add and measured it against the rules it backs up, on a test set kept apart from training.",
   ],
   next: [
+    "Payment engineering: idempotency, safe retries, out-of-order events and reconciliation at scale.",
     "Building LLM features properly: prompts, structured output, evaluation and cost control.",
     "Agents and tool use beyond what he has done with MCP so far.",
   ],
-  open: "Open to fintech engineering roles where AI is part of how the team builds.",
+  open: "Open to backend and fintech engineering roles: lending, payments, ledgers and reconciliation.",
 };
