@@ -73,7 +73,7 @@ function run(raw: string): Reply {
     go("now-next");
     return { text: "What he is doing now and learning next.", ok: true };
   }
-  if (has("whoami", "who", "about", "joshua")) return { text: `${person.name}, software developer in ${person.location}. He builds fintech software with AI in the loop.`, ok: true };
+  if (has("whoami", "who", "about", "joshua")) return { text: `${person.name}, software developer in ${person.location}. He builds lending, ledger and payment software, with AI in the loop.`, ok: true };
   if (has("top", "home", "start")) {
     go("top");
     return { text: "Back at the top.", ok: true };

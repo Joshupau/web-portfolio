@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     template: `%s | ${person.name}`,
   },
   description:
-    "Full-stack developer in Zamboanga City building fintech software with AI in the loop: accounting and loan systems, real-time backends, and an offline-first finance app.",
+    "Backend-focused fintech developer: installment-sales and microfinance lending systems, double-entry ledgers, amortization, statement reconciliation, and an offline-first finance app.",
 };
 
 export const viewport: Viewport = {

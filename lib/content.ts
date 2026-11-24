@@ -9,15 +9,16 @@ export const person = {
 };
 
 export const intro = {
-  headline: "I build fintech software with AI in the loop.",
-  body: "Full-stack developer in Zamboanga City. I use AI tools every day to design, write and test software, and I check what they produce with tests. I’ve shipped finance systems this way: a double-entry accounting backend with loan schedules, and an offline-first finance app with its own AI features.",
+  headline: "I build money software that has to add up.",
+  body: "Backend-focused developer in Zamboanga City. Most of my professional work has been lending and accounting: a real-estate installment-sales platform and a microfinance accounting system, with double-entry ledgers, amortization schedules and payment review. On my own time I build finance tools too, and I use AI every day, checked by tests.",
 };
 
 export const focus = [
   {
     label: "Now",
-    title: "Software development, with AI as a working tool",
+    title: "Fintech backends, with AI as a working tool",
     points: [
+      "Money held in integer centavos, ledgers that must balance, and every change traceable to who made it.",
       "Plan and build features with AI assistants, then check the result with tests I write and run myself.",
       "Fico has offline test scripts for its query engine, sync logic and parsers, so AI-written changes get verified, not trusted.",
       "Built a read-only MCP server so an AI assistant can answer questions from my real finance data.",
@@ -25,8 +26,9 @@ export const focus = [
   },
   {
     label: "Next",
-    title: "Upskilling in AI",
+    title: "Deeper fintech, and AI",
     points: [
+      "Payment engineering: idempotency, safe retries, out-of-order events and reconciliation at scale.",
       "Building LLM features properly: prompts, structured output, evaluation and cost control.",
       "Agents and tool use beyond what I have done with MCP so far.",
       "Open to roles where AI is part of how the team builds, and where I can keep learning it.",
@@ -271,7 +273,7 @@ export const experience = [
     role: "Software Developer",
     period: "Jun 2026 to present",
     points: [
-      "Maintain and extend the company’s production point-of-sale system: bug fixes, feature updates and ongoing improvements.",
+      "Maintain and extend the company’s production point-of-sale system, which records live sales transactions: bug fixes, features and ongoing improvements.",
       "Primary on-site developer, taking tasks from requirements through to delivery.",
     ],
   },
@@ -280,10 +282,11 @@ export const experience = [
     role: "Junior Backend Developer",
     period: "Nov 2024 to May 2026",
     points: [
-      "Built a double-entry accounting system with automated interest calculations and loan release schemas.",
-      "Wrote REST APIs and background workers in Node.js and TypeScript for high-concurrency work.",
-      "Added real-time features with Socket.io for gaming backends and live updates.",
-      "Shipped cross-platform builds (Electron for desktop, Android APKs) and integrated PayPal and Web3 modules.",
+      "Worked on the backend team for two finance products: a real-estate installment-sales platform and a microfinance lending and accounting system.",
+      "Built amortization schedules and a buyer ledger with a client portal, where buyers see their balance and pay in-app, and the owner reviews each payment before it posts.",
+      "Built double-entry accounting with automated interest calculations and loan release workflows.",
+      "Wrote REST APIs and background workers in Node.js and TypeScript for high-concurrency work, and integrated PayPal payments.",
+      "Also shipped Socket.io real-time features, Electron desktop builds and Android APKs.",
     ],
   },
   {
